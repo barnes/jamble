@@ -2,6 +2,7 @@
 	import { categories } from '$lib/categories';
 	import { storeGame } from '$lib/db';
 	import { dev } from '$app/environment';
+	import GameEnd from '$lib/GameEnd.svelte';
 	export const prerender = true;
 	export const ssr = false;
 
@@ -57,7 +58,8 @@
 	);
 	const startGame = () => {
 		gameState.state = 'playing';
-		gameState.timer = 30000;
+		gameState.timer = 10000;
+		// gameState.guess = '';
 		gameState.correctCount = 0;
 		gameState.correctWords = [];
 		gameState.lastWord = '';
@@ -163,16 +165,10 @@
 			<div class="word">{gameState.currentShuffle}</div>
 			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 		{:else if gameState.state == 'end'}
-			<h2>Game over!</h2>
-			<ul>
-				<li>You got {gameState.correctCount} words correct!</li>
-				<li>Correct words: {gameState.correctWords.join(', ')}</li>
-				{#if gameState.correctCount === 8}
-					<li>Well done! You got all the words!</li>
-				{:else}
-					<li>The last word you did not get was {gameState.lastWord}</li>
-				{/if}
-			</ul>
+			<GameEnd
+				correctCount={gameState.correctCount}
+				correctWords={gameState.correctWords}
+				lastWord={gameState.lastWord} />	
 			<div class="button">
 				<button on:click={startGame}>Play Again!</button>
 			</div>
