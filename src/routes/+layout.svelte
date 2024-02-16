@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@picocss/pico';
+	import '../global.css';
 </script>
 
 <main class="container">

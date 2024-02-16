@@ -33,9 +33,14 @@
 
 	// const todaysWords = [getRandom(0), getRandom(1), getRandom(2), getRandom(3)];
 	// const shuffledWords = todaysWords.map((word) => shuffleWord(word));
+  let green = '#4c8577';
+  let red = '#FF5A5F';
+  let yellow = '#edcf8e';
 
 	let gameState = $state({
 		timer: 0,
+    timerWidth: '100%',
+    timerColor: green,
 		state: 'start', //start, playing, end 
 		currentShuffle: todaysWords['shuffledWords'][0],
     currentWord: todaysWords['todaysWords'][0],
@@ -47,46 +52,66 @@
 
   console.log(gameState);
 
+  
+
+  const timerStyles = $derived(`color: black; transition: width 1s; border-radius: 2rem; background-color: ${gameState.timerColor}; font-size: 2rem; margin: 1rem auto; display:flex; justify-content: center; width:${gameState.timerWidth}`);
 	const startGame = () => {
 		gameState.state = 'playing';
-		gameState.timer = 30;
+		gameState.timer = 30000;
      gameState.correctCount = 0;
     gameState.correctWords = [];
 		const timer = setInterval(() => {
-			if (gameState.currentWord === gameState.guess) {
+			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ','')) {
         gameState.correctCount++;
         gameState.correctWords.push(gameState.currentWord);
 				gameState.currentShuffle = todaysWords['shuffledWords'][todaysWords['shuffledWords'].indexOf(gameState.currentShuffle) + 1];
         gameState.currentWord = todaysWords['todaysWords'][todaysWords['todaysWords'].indexOf(gameState.currentWord) + 1];
-				gameState.guess = '';
+				gameState.guess = ''
         if(gameState.currentShuffle === undefined) {
           clearInterval(timer);
           gameState.completeGame = true;
           gameState.state = 'end';
         }
 			}
-			gameState.timer--;
+      gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
+			gameState.timer -= 150;
+      if(gameState.timer < 15000 && gameState.timer > 10000) {
+        gameState.timerColor = yellow;
+      } else if (gameState.timer < 10000) {
+        gameState.timerColor = red;
+      }
 			if (gameState.timer <= 0) {
 				clearInterval(timer);
 				gameState.state = 'end';
 			}
-		}, 1000);
+      }, 150);
 	};
+
 
 </script>
 
-<h1>Jamble</h1>
+<div class="title">
+  <h1>SCRAM</h1>
+  <span>A word game.</span>
+</div>
+
+{#if gameState.state == 'start' || gameState.state == 'end'}
+<article>
 <p>
-	You've got 30 seconds to un-jumble as many words as possible. Your score is the number of words you clear. 
+	You've got 30 seconds to un-scramble as many words as possible. Your score is the number of words you clear. Get a 'perfect' game by unscrambling all 8 words! 
 </p>
+<em>This game is in very, very early stages of development. Send feedback to ryan@barnes.lol</em>
+</article>
+{/if}
 
 {#if gameState.state == 'start'}
  <div class="button">
    <button on:click={startGame}>Play!</button>
  </div>
 {:else if gameState.state == 'playing'}
-	{gameState.timer}
-  <div class="word">{gameState.currentShuffle}</div>
+<div style={timerStyles}>{Math.floor(gameState.timer/1000)}</div>
+
+<div class="word">{gameState.currentShuffle}</div>
 	<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 {:else if gameState.state == 'end'}
 	<h2>Game over!</h2>
@@ -115,5 +140,22 @@
     margin: 1rem 0;
     display: flex;
     justify-content: center;
+  }
+  .timer {
+    font-size: 2rem;
+    margin: 1rem 0;
+    display:flex;
+    justify-content: center;
+  }
+  .title {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 2rem;
+  }
+  .title h1 {
+    margin: 0;
   }
 </style>
