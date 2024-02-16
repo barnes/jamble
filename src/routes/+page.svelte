@@ -2,7 +2,7 @@
 	import { categories } from '$lib/categories';
 	import { storeGame } from '$lib/db';
 
-	const todaysCategory = categories[Math.floor(Math.random() * categories.length)];
+	let todaysCategory = categories[Math.floor(Math.random() * categories.length)];
 
 	const shuffleWord = (word: string) => {
 		const shuffled = word
@@ -82,6 +82,7 @@
 						);
 					}
 					gameState.state = 'end';
+					todaysCategory = categories[Math.floor(Math.random() * categories.length)];
 					todaysWords = getWords();
 					gameState.currentShuffle = todaysWords['shuffledWords'][0];
 					gameState.currentWord = todaysWords.todaysCategory.words[0];
@@ -108,6 +109,7 @@
 						timeToComplete
 					);
 				}
+				todaysCategory = categories[Math.floor(Math.random() * categories.length)];
 				todaysWords = getWords();
 				gameState.currentShuffle = todaysWords['shuffledWords'][0];
 				gameState.currentWord = todaysWords.todaysCategory.words[0];
