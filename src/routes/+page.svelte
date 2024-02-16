@@ -2,6 +2,7 @@
 	import { categories } from '$lib/categories';
 	import { storeGame } from '$lib/db';
 
+
 	let todaysCategory = categories[Math.floor(Math.random() * categories.length)];
 
 	const shuffleWord = (word: string) => {
@@ -16,12 +17,12 @@
 		}
 	};
 
-	const getWords = () => {
-		const shuffledWords = todaysCategory.words.map((word) => shuffleWord(word));
-		return { todaysCategory, shuffledWords };
+	const getWords = (category) => {
+		const shuffledWords = category.words.map((word) => shuffleWord(word));
+		return { todaysCategory: category, shuffledWords };
 	};
 
-	let todaysWords = getWords();
+	let todaysWords = getWords(todaysCategory);
 
 	let record = true;
 
@@ -42,7 +43,8 @@
 		guess: '',
 		correctCount: 0,
 		correctWords: [],
-		completeGame: false
+		completeGame: false,
+		lastWord: ''
 	});
 
 	const timerStyles = $derived(
@@ -53,6 +55,8 @@
 		gameState.timer = 30000;
 		gameState.correctCount = 0;
 		gameState.correctWords = [];
+		gameState.lastWord = '';
+		console.log(gameState);
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
 				gameState.guess = '';
@@ -69,6 +73,7 @@
 				if (gameState.currentShuffle === undefined) {
 					clearInterval(timer);
 					gameState.completeGame = true;
+					gameState.lastWord = gameState.currentWord;
 					if (record) {
 						let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
 						storeGame(
@@ -82,10 +87,12 @@
 						);
 					}
 					gameState.state = 'end';
-					todaysCategory = categories[Math.floor(Math.random() * categories.length)];
-					todaysWords = getWords();
+					todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 					gameState.currentShuffle = todaysWords['shuffledWords'][0];
 					gameState.currentWord = todaysWords.todaysCategory.words[0];
+					gameState.category = todaysWords.todaysCategory.name
+					console.log(todaysWords);
+					console.log(gameState);
 				}
 			}
 			gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
@@ -97,6 +104,7 @@
 			}
 			if (gameState.timer <= 0) {
 				clearInterval(timer);
+				gameState.lastWord = gameState.currentWord;
 				if (record) {
 					let timeToComplete = 30;
 					storeGame(
@@ -109,11 +117,14 @@
 						timeToComplete
 					);
 				}
-				todaysCategory = categories[Math.floor(Math.random() * categories.length)];
-				todaysWords = getWords();
+				console.log(categories[Math.floor(Math.random() * categories.length)]);
+				todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 				gameState.currentShuffle = todaysWords['shuffledWords'][0];
 				gameState.currentWord = todaysWords.todaysCategory.words[0];
+				gameState.category = todaysWords.todaysCategory.name
 				gameState.state = 'end';
+				console.log(todaysWords);
+				console.log(gameState);
 			}
 		}, 150);
 	};
@@ -160,7 +171,7 @@
 				{#if gameState.correctCount === 8}
 					<li>Well done! You got all the words!</li>
 				{:else}
-					<li>The last word you did not get was {gameState.currentWord}</li>
+					<li>The last word you did not get was {gameState.lastWord}</li>
 				{/if}
 			</ul>
 			<div class="button">
