@@ -95,7 +95,7 @@
   <span>A word game.</span>
 </div>
 
-{#if gameState.state == 'start' || gameState.state == 'end'}
+{#if gameState.state == 'start' }
 <article>
 <p>
 	You've got 30 seconds to un-scramble as many words as possible. Your score is the number of words you clear. Get a 'perfect' game by unscrambling all 8 words! 
