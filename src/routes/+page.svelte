@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { W } from "vitest/dist/reporters-1evA5lom.js";
+
 	const words = {
 		'4_letter_words': [
 			'ghost',
@@ -111,7 +113,9 @@
 {:else if gameState.state == 'playing'}
 	{gameState.timer}
 	<h2>{gameState.currentShuffle}</h2>
-  <!-- <p>{gameState.currentWord}</p> -->
+    {#if cheat}
+  <p>{gameState.currentWord}</p>
+    {/if}
 	<input type="text" bind:value={gameState.guess} />
 {:else if gameState.state == 'win'}
 	<h2>You win!</h2>

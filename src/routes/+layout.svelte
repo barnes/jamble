@@ -8,7 +8,6 @@
 
 <style>
 	main {
-		width: 50%;
 		padding: 3rem;
 	}
 </style>
