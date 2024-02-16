@@ -10,5 +10,6 @@
 <style>
 	main {
 		padding: 3rem;
+		height: 100%;
 	}
 </style>
