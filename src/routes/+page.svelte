@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { categories } from '$lib/categories';
 	import { storeGame } from '$lib/db';
+	import { dev } from '$app/environment';
+	export const prerender = true;
+	export const ssr = false;
 
 
 	let todaysCategory = categories[Math.floor(Math.random() * categories.length)];
@@ -24,7 +27,9 @@
 
 	let todaysWords = getWords(todaysCategory);
 
-	let record = true;
+	let record = !dev;
+	
+	console.log(record);
 
 	// const todaysWords = [getRandom(0), getRandom(1), getRandom(2), getRandom(3)];
 	// const shuffledWords = todaysWords.map((word) => shuffleWord(word));
@@ -56,7 +61,6 @@
 		gameState.correctCount = 0;
 		gameState.correctWords = [];
 		gameState.lastWord = '';
-		console.log(gameState);
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
 				gameState.guess = '';
@@ -91,8 +95,6 @@
 					gameState.currentShuffle = todaysWords['shuffledWords'][0];
 					gameState.currentWord = todaysWords.todaysCategory.words[0];
 					gameState.category = todaysWords.todaysCategory.name
-					console.log(todaysWords);
-					console.log(gameState);
 				}
 			}
 			gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
@@ -117,14 +119,11 @@
 						timeToComplete
 					);
 				}
-				console.log(categories[Math.floor(Math.random() * categories.length)]);
 				todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 				gameState.currentShuffle = todaysWords['shuffledWords'][0];
 				gameState.currentWord = todaysWords.todaysCategory.words[0];
 				gameState.category = todaysWords.todaysCategory.name
 				gameState.state = 'end';
-				console.log(todaysWords);
-				console.log(gameState);
 			}
 		}, 150);
 	};
