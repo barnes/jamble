@@ -2,58 +2,15 @@
 	import type { W } from "vitest/dist/reporters-1evA5lom.js";
 
 	const words = {
-		'4_letter_words': [
-			'ghost',
-			'wriggle',
-			'laugh',
-			'steam',
-			'blush',
-			'smile',
-			'shake',
-			'roar',
-			'dance',
-			'shout'
-		],
-		'5_letter_words': [
-			'dream',
-			'ocean',
-			'cabin',
-			'forest',
-			'sunset',
-			'melody',
-			'rainbow',
-			'journey',
-			'whisper',
-			'courage'
-		],
-		'6_letter_words': [
-			'mystery',
-			'science',
-			'cascade',
-			'twilight',
-			'festival',
-			'treasure',
-			'rainbow',
-			'journey',
-			'whisper',
-			'courage'
-		],
-		'7_letter_words': [
-			'crystal',
-			'butterfly',
-			'starlight',
-			'mountain',
-			'waterfall',
-			'wonderland',
-			'adventure',
-			'knowledge',
-			'gratitude',
-			'inspiration'
-		]
-	};
+  "3_letters": ["cat", "dog", "cow", "pig", "fox"],
+  "4_letters": ["wolf", "bear", "lion", "goat", "deer"], 
+  "5_letters": ["horse", "zebra", "camel", "llama", "sheep"],
+  "6_letters": ["donkey", "monkey", "lemur", "bunny", "ferret"],
+  "7_letters": ["buffalo", "elephant", "dolphin", "raccoon", "squirrel"]
+};
 
 	const getRandom = (set: number) => {
-		return words[Object.keys(words)[set]][Math.floor(Math.random() * 10)];
+		return words[Object.keys(words)[set]][Math.floor(Math.random() * 5)];
 	};
 
 	const shuffleWord = (word: string) => {
@@ -113,7 +70,7 @@
 {:else if gameState.state == 'playing'}
 	{gameState.timer}
 	<h2>{gameState.currentShuffle}</h2>
-	<input type="text" bind:value={gameState.guess} />
+	<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 {:else if gameState.state == 'win'}
 	<h2>You win!</h2>
 {:else if gameState.state == 'loss'}
