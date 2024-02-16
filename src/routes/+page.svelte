@@ -113,9 +113,6 @@
 {:else if gameState.state == 'playing'}
 	{gameState.timer}
 	<h2>{gameState.currentShuffle}</h2>
-    {#if cheat}
-  <p>{gameState.currentWord}</p>
-    {/if}
 	<input type="text" bind:value={gameState.guess} />
 {:else if gameState.state == 'win'}
 	<h2>You win!</h2>
