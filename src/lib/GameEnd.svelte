@@ -1,5 +1,6 @@
 <script lang="ts">
 	import results from '$lib/stores/results';
+	import { onMount } from 'svelte';
 	let {
 		correctCount,
 		correctWords,
@@ -9,9 +10,35 @@
 		correctWords: string[];
 		lastWord: string;
 	} = $props();
+	import copy from 'copy-to-clipboard';
+	const today = new Date();
+	const yyyy = today.getFullYear();
+	let mm = today.getMonth() + 1; // month is zero-based
+	let dd = today.getDate();
+
+	if (dd < 10) dd = '0' + dd;
+	if (mm < 10) mm = '0' + mm;
+
+	const formatted = dd + '.' + mm + '.' + yyyy;
+
+	let shareString = `SCRAM: ${formatted}: `;
+
+	for (let i = 0; i < 8; i++) {
+		if (i < correctCount) {
+			shareString = shareString + `✅`;
+		} else {
+			shareString = shareString + `❌`;
+		}
+	}
+
+	onMount(() => {
+		document.querySelector('.copy').addEventListener('click', () => {
+			copy(shareString);
+		});
+	})
 </script>
 
-<div class="grid">
+<div class="grid top">
 	<div class="card">
 		<h2>Total Correct:</h2>
 		<article>
@@ -34,6 +61,8 @@
 			</div>
 		</article>
 	</div>
+</div>
+<div class="grid">
 	{#if correctCount != 8}
 		<div class="card">
 			<h2>Last Word:</h2>
@@ -50,9 +79,20 @@
 			<p class="history-item">Time Played:<span class="word">{$results.timePlayed}</span></p>
 		</article>
 	</div>
+	<div class="card">
+		<h2>Share Your Results</h2>
+		<article style="display: flex; flex-direction:column">
+			<p>{shareString}</p>
+			<button class="copy">Copy to share</button>
+		</article>
+	</div>
 </div>
 
 <style>
+	.top {
+		margin-bottom: 1rem;
+	
+	}
 	.history-item {
 		display: flex;
 		flex-direction: row;
