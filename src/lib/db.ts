@@ -38,3 +38,17 @@ export const storeGame = (
 		.then((data) => console.log(data))
 		.catch((err) => console.log(err));
 };
+
+export const getRunCount = async () => {
+	const data = await fetch(url, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${authToken}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			requests: [{ type: 'execute', stmt: { sql: 'SELECT count(*) FROM games' } }, { type: 'close' }]
+		})
+	});
+	return data.json();
+}

@@ -3,9 +3,22 @@
 	import { storeGame } from '$lib/db';
 	import { dev } from '$app/environment';
 	import GameEnd from '$lib/GameEnd.svelte';
+	import results from '$lib/stores/results';
 	export const prerender = true;
 	export const ssr = false;
 
+	// console.log($results);
+
+	results.subscribe((value) => {
+		console.log(typeof value);
+		console.log(Object.keys(value));
+		Object.keys(value).forEach((key) => {
+			console.log(key);
+			console.log(value[key]);
+		});
+	});
+
+	const updateResults = (time) => {};
 
 	let todaysCategory = categories[Math.floor(Math.random() * categories.length)];
 
@@ -29,7 +42,7 @@
 	let todaysWords = getWords(todaysCategory);
 
 	let record = !dev;
-	
+
 	console.log(record);
 
 	// const todaysWords = [getRandom(0), getRandom(1), getRandom(2), getRandom(3)];
@@ -58,7 +71,7 @@
 	);
 	const startGame = () => {
 		gameState.state = 'playing';
-		gameState.timer = 10000;
+		gameState.timer = 30000;
 		// gameState.guess = '';
 		gameState.correctCount = 0;
 		gameState.correctWords = [];
@@ -92,11 +105,16 @@
 							timeToComplete
 						);
 					}
+					results.update((value) => {
+						return {
+							gamesPlayed: value.gamesPlayed + 1,
+						};
+					});
 					gameState.state = 'end';
 					todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 					gameState.currentShuffle = todaysWords['shuffledWords'][0];
 					gameState.currentWord = todaysWords.todaysCategory.words[0];
-					gameState.category = todaysWords.todaysCategory.name
+					gameState.category = todaysWords.todaysCategory.name;
 				}
 			}
 			gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
@@ -121,10 +139,15 @@
 						timeToComplete
 					);
 				}
+				results.update((value) => {
+						return {
+							gamesPlayed: value.gamesPlayed + 1,
+						};
+					});
 				todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 				gameState.currentShuffle = todaysWords['shuffledWords'][0];
 				gameState.currentWord = todaysWords.todaysCategory.words[0];
-				gameState.category = todaysWords.todaysCategory.name
+				gameState.category = todaysWords.todaysCategory.name;
 				gameState.state = 'end';
 			}
 		}, 150);
@@ -132,11 +155,6 @@
 </script>
 
 <div class="game">
-	<div class="title">
-		<h1>SCRAM</h1>
-		<span>A word game.</span>
-	</div>
-
 	{#if gameState.state == 'start'}
 		<article>
 			<p>
@@ -168,7 +186,8 @@
 			<GameEnd
 				correctCount={gameState.correctCount}
 				correctWords={gameState.correctWords}
-				lastWord={gameState.lastWord} />	
+				lastWord={gameState.lastWord}
+			/>
 			<div class="button">
 				<button on:click={startGame}>Play Again!</button>
 			</div>
@@ -198,14 +217,6 @@
 		margin: 1rem 0;
 		display: flex;
 		justify-content: center;
-	}
-	.title {
-		display: flex;
-		flex-direction: row;
-		gap: 2rem;
-		align-items: center;
-		align-content: center;
-		margin-bottom: 2rem;
 	}
 	.title h1 {
 		margin: 0;
