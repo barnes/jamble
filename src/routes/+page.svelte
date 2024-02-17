@@ -145,6 +145,7 @@
 				results.update((value) => {
 					return {
 						gamesPlayed: value.gamesPlayed + 1,
+						numberComplete: value.numberComplete,
 						timePlayed: value.timePlayed + 30
 					};
 				});
