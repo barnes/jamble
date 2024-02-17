@@ -3,7 +3,6 @@ import { writable } from 'svelte/store';
  
 const results = writable({
     gamesPlayed: 0,
-    numberCorrect: [],
     numberComplete: 0,
     timePlayed: 0,
 });

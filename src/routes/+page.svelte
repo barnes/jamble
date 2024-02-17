@@ -109,7 +109,6 @@
 					results.update((value) => {
 						return {
 							gamesPlayed: value.gamesPlayed + 1,
-							numberCorrect: value.numberCorrect.push(gameState.correctCount),
 							numberComplete: value.numberComplete + 1,
 							timePlayed: value.timePlayed + timeToComplete
 						};
@@ -146,7 +145,6 @@
 				results.update((value) => {
 					return {
 						gamesPlayed: value.gamesPlayed + 1,
-						numberCorrect: value.numberCorrect.push(gameState.correctCount),
 						timePlayed: value.timePlayed + 30
 					};
 				});
