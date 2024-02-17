@@ -4,6 +4,7 @@
 	import { dev } from '$app/environment';
 	import GameEnd from '$lib/GameEnd.svelte';
 	import results from '$lib/stores/results';
+	import CompletedWords from '$lib/CompletedWords.svelte';
 	export const prerender = true;
 	export const ssr = false;
 
@@ -93,8 +94,8 @@
 					clearInterval(timer);
 					gameState.completeGame = true;
 					gameState.lastWord = gameState.currentWord;
+					let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
 					if (record) {
-						let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
 						storeGame(
 							gameState.category,
 							gameState.correctCount,
@@ -108,6 +109,9 @@
 					results.update((value) => {
 						return {
 							gamesPlayed: value.gamesPlayed + 1,
+							numberCorrect: value.numberCorrect.push(gameState.correctCount),
+							numberComplete: value.numberComplete + 1,
+							timePlayed: value.timePlayed + timeToComplete
 						};
 					});
 					gameState.state = 'end';
@@ -140,10 +144,12 @@
 					);
 				}
 				results.update((value) => {
-						return {
-							gamesPlayed: value.gamesPlayed + 1,
-						};
-					});
+					return {
+						gamesPlayed: value.gamesPlayed + 1,
+						numberCorrect: value.numberCorrect.push(gameState.correctCount),
+						timePlayed: value.timePlayed + 30
+					};
+				});
 				todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
 				gameState.currentShuffle = todaysWords['shuffledWords'][0];
 				gameState.currentWord = todaysWords.todaysCategory.words[0];
@@ -177,11 +183,11 @@
 		{:else if gameState.state == 'playing'}
 			<div style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
 			<div class="category">
-				The Category:
-				{gameState.category}
+				The Category: {gameState.category}
 			</div>
 			<div class="word">{gameState.currentShuffle}</div>
 			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
+			<CompletedWords correctWords={gameState.correctWords} correctCount={gameState.correctCount} />
 		{:else if gameState.state == 'end'}
 			<GameEnd
 				correctCount={gameState.correctCount}
@@ -196,17 +202,48 @@
 </div>
 
 <style>
+	@media (max-width: 600px) {
+		.game-container {
+			width: 100%;
+		}
+		.word {
+			font-size: 3rem;
+			margin: 0.5rem 0;
+			display: flex;
+			justify-content: center;
+		}
+		.category {
+			font-size: 1.5rem;
+			margin: 0.5rem 0;
+			display: flex;
+			justify-content: center;
+			border-bottom: 2px dashed var(--pico-primary);
+			width: 100%;
+			margin: 0 auto;
+		}
+	}
+	@media (min-width: 600px) {
+		.word {
+			font-size: 4rem;
+			margin: 1rem 0;
+			display: flex;
+			justify-content: center;
+		}
+		.category {
+			font-size: 2rem;
+			margin: 1rem 0;
+			display: flex;
+			justify-content: center;
+			border-bottom: 2px dashed var(--pico-primary);
+			width: 100%;
+			margin: 0 auto;
+		}
+	}
 	.record-setting {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.word {
-		font-size: 4rem;
-		margin: 1rem 0;
-		display: flex;
-		justify-content: center;
-	}
 	.button {
 		margin: 1rem 0;
 		display: flex;
@@ -214,20 +251,11 @@
 	}
 	.timer {
 		font-size: 2rem;
-		margin: 1rem 0;
+		margin: 0;
 		display: flex;
 		justify-content: center;
 	}
 	.title h1 {
 		margin: 0;
-	}
-	.category {
-		font-size: 2rem;
-		margin: 1rem 0;
-		display: flex;
-		justify-content: center;
-		border-bottom: 2px dashed var(--pico-primary);
-		width: 100%;
-		margin: 0 auto;
 	}
 </style>

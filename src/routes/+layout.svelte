@@ -46,6 +46,11 @@
 	}
 	main {
 		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	header {
+		padding-bottom: 0;
 	}
 	.title {
 		display: flex;
@@ -53,6 +58,5 @@
 		gap: 2rem;
 		align-items: center;
 		align-content: center;
-		margin-bottom: 2rem;
 	}
 </style>
