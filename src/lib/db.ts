@@ -12,6 +12,7 @@ const createDbQuery = `CREATE TABLE games (
          completeGame BOOLEAN, 
          timeToComplete INTEGER
          )`;
+		 
     
 const storeGameQuery = `INSERT INTO games (category, correctCount, totalWords, words, correctWords, completeGame, timeToComplete) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
