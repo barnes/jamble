@@ -1,5 +1,4 @@
 <script lang="ts">
-	import results from '$lib/stores/results';
 	import { onMount } from 'svelte';
 	let {
 		correctCount,
@@ -19,7 +18,7 @@
 	if (dd < 10) dd = '0' + dd;
 	if (mm < 10) mm = '0' + mm;
 
-	const formatted = dd + '.' + mm + '.' + yyyy;
+	const formatted = mm + '.' + dd + '.' + yyyy;
 
 	let shareString = `SCRAM: ${formatted}: `;
 
@@ -31,7 +30,17 @@
 		}
 	}
 
+	let results = {
+		gamesPlayed: 0,
+		numberComplete: 0,
+		timePlayed: 0
+	};
 	onMount(() => {
+		if(browser){
+			results.gamesPlayed = window.localStorage.getItem('scram-gamesPlayed');
+			results.numberComplete = window.localStorage.getItem('scram-numberComplete');
+			results.timePlayed = window.localStorage.getItem('scram-timePlayed');
+		}
 		document.querySelector('.copy').addEventListener('click', () => {
 			copy(shareString);
 		});
@@ -74,9 +83,9 @@
 	<div class="card">
 		<h2>Your History:</h2>
 		<article class="history">
-			<p class="history-item">Games Played: <span class="word">{$results.gamesPlayed}</span></p>
-			<p class="history-item">Games Complete:<span class="word">{$results.numberComplete}</span></p>
-			<p class="history-item">Time Played:<span class="word">{$results.timePlayed}</span></p>
+			<p class="history-item">Games Played: <span class="word">{results.gamesPlayed}</span></p>
+			<p class="history-item">Games Complete:<span class="word">{results.numberComplete}</span></p>
+			<p class="history-item">Time Played:<span class="word">{results.timePlayed}</span></p>
 		</article>
 	</div>
 	<div class="card">
