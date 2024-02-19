@@ -16,11 +16,6 @@
 
 	const updateResults = (complete: boolean, timePlayed: number, lastPuzzle: string) => {
 		if (browser) {
-			if (window.localStorage.getItem('scram-gamesPlayed') === null) {
-				window.localStorage.setItem('scram-gamesPlayed', '0');
-				window.localStorage.setItem('scram-numberComplete', '0');
-				window.localStorage.setItem('scram-timePlayed', '0');
-			}
 			const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
 			const currentNumberComplete = parseInt(
 				window.localStorage.getItem('scram-numberComplete') || '0'

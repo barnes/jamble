@@ -10,6 +10,7 @@
 		lastWord: string;
 	} = $props();
 	import copy from 'copy-to-clipboard';
+	import { browser } from '$app/environment';
 	const today = new Date();
 	const yyyy = today.getFullYear();
 	let mm = today.getMonth() + 1; // month is zero-based
