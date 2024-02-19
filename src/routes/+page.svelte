@@ -1,65 +1,70 @@
 <script lang="ts">
 	import { categories } from '$lib/categories';
+	import { puzzles } from '$lib/puzzles';
 	import { storeGame } from '$lib/db';
-	import { dev } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import GameEnd from '$lib/GameEnd.svelte';
-	import results from '$lib/stores/results';
 	import CompletedWords from '$lib/CompletedWords.svelte';
 	export const prerender = true;
 	export const ssr = false;
 
-	// console.log($results);
-
-	results.subscribe((value) => {
-		console.log(typeof value);
-		console.log(Object.keys(value));
-		Object.keys(value).forEach((key) => {
-			console.log(key);
-			console.log(value[key]);
-		});
-	});
-
-	const updateResults = (time) => {};
-
-	let todaysCategory = categories[Math.floor(Math.random() * categories.length)];
-
-	const shuffleWord = (word: string) => {
-		const shuffled = word
-			.split('')
-			.sort(() => Math.random() - 0.5)
-			.join('');
-		if (shuffled === word) {
-			return shuffleWord(word);
-		} else {
-			return shuffled;
+	const updateLocalStorage = (key, value) => {
+		if (browser) {
+			window.localStorage.setItem(`scram-${key}`, `${value[key]}`);
 		}
 	};
 
-	const getWords = (category) => {
-		const shuffledWords = category.words.map((word) => shuffleWord(word));
-		return { todaysCategory: category, shuffledWords };
+	const updateResults = (complete: boolean, timePlayed: number, lastPuzzle: string) => {
+		if (browser) {
+			if (window.localStorage.getItem('scram-gamesPlayed') === null) {
+				window.localStorage.setItem('scram-gamesPlayed', '0');
+				window.localStorage.setItem('scram-numberComplete', '0');
+				window.localStorage.setItem('scram-timePlayed', '0');
+			}
+			const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
+			const currentNumberComplete = parseInt(
+				window.localStorage.getItem('scram-numberComplete') || '0'
+			);
+			const currentTimePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
+
+			window.localStorage.setItem('scram-gamesPlayed', (currentGamesPlayed + 1).toString());
+			if (complete)
+				window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
+			window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
+			window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
+		}
 	};
 
-	let todaysWords = getWords(todaysCategory);
+	let lastPuzzle = '';
+	if (browser) {
+		lastPuzzle = window.localStorage.getItem('scram-lastPuzzle');
+	}
+
+	const today = new Date();
+	const yyyy = today.getFullYear();
+	let mm = today.getMonth() + 1; // month is zero-based
+	let dd = today.getDate();
+
+	if (dd < 10) dd = '0' + dd;
+	if (mm < 10) mm = '0' + mm;
+
+	const todaysDate = mm + '.' + dd + '.' + yyyy;
 
 	let record = !dev;
-
-	console.log(record);
-
-	// const todaysWords = [getRandom(0), getRandom(1), getRandom(2), getRandom(3)];
-	// const shuffledWords = todaysWords.map((word) => shuffleWord(word));
 	let green = '#4c8577';
 	let red = '#FF5A5F';
 	let yellow = '#edcf8e';
+
+	const todaysPuzzle = puzzles[todaysDate];
 
 	let gameState = $state({
 		timer: 0,
 		timerWidth: '100%',
 		timerColor: green,
 		state: 'start', //start, playing, end
-		currentShuffle: todaysWords['shuffledWords'][0],
-		currentWord: todaysWords.todaysCategory.words[0],
-		category: todaysWords.todaysCategory.name,
+		currentWordCount: 0,
+		currentShuffle: todaysPuzzle[0][1],
+		currentWord: todaysPuzzle[0][0],
 		guess: '',
 		correctCount: 0,
 		correctWords: [],
@@ -70,6 +75,7 @@
 	const timerStyles = $derived(
 		`color: black; transition: width 1s; border-radius: 2rem; background-color: ${gameState.timerColor}; font-size: 2rem; margin: 1rem auto; display:flex; justify-content: center; width:${gameState.timerWidth}`
 	);
+
 	const startGame = () => {
 		gameState.state = 'playing';
 		gameState.timer = 30000;
@@ -80,45 +86,30 @@
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
 				gameState.guess = '';
+				gameState.currentWordCount++;
 				gameState.correctCount++;
 				gameState.correctWords.push(gameState.currentWord);
-				gameState.currentShuffle =
-					todaysWords['shuffledWords'][
-						todaysWords['shuffledWords'].indexOf(gameState.currentShuffle) + 1
-					];
-				gameState.currentWord =
-					todaysWords.todaysCategory.words[
-						todaysWords['shuffledWords'].indexOf(gameState.currentShuffle)
-					];
-				if (gameState.currentShuffle === undefined) {
+				if (todaysPuzzle[gameState.currentWordCount] === undefined) {
 					clearInterval(timer);
 					gameState.completeGame = true;
 					gameState.lastWord = gameState.currentWord;
 					let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
 					if (record) {
 						storeGame(
-							gameState.category,
+							'null',
 							gameState.correctCount,
-							todaysWords.todaysCategory.words.length,
-							todaysWords.todaysCategory.words,
+							todaysPuzzle.length,
+							todaysPuzzle,
 							gameState.correctWords,
 							gameState.completeGame,
 							timeToComplete
 						);
 					}
-					results.update((value) => {
-						return {
-							gamesPlayed: value.gamesPlayed + 1,
-							numberComplete: value.numberComplete + 1,
-							timePlayed: value.timePlayed + timeToComplete
-						};
-					});
+					updateResults(true, timeToComplete, todaysDate);
 					gameState.state = 'end';
-					todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
-					gameState.currentShuffle = todaysWords['shuffledWords'][0];
-					gameState.currentWord = todaysWords.todaysCategory.words[0];
-					gameState.category = todaysWords.todaysCategory.name;
 				}
+				gameState.currentShuffle = todaysPuzzle[gameState.currentWordCount][1];
+				gameState.currentWord = todaysPuzzle[gameState.currentWordCount][0];
 			}
 			gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
 			gameState.timer -= 150;
@@ -133,26 +124,16 @@
 				if (record) {
 					let timeToComplete = 30;
 					storeGame(
-						gameState.category,
+						'null',
 						gameState.correctCount,
-						todaysWords.todaysCategory.words.length,
-						todaysWords.todaysCategory.words,
+						todaysPuzzle.length,
+						todaysPuzzle,
 						gameState.correctWords,
 						gameState.completeGame,
 						timeToComplete
 					);
 				}
-				results.update((value) => {
-					return {
-						gamesPlayed: value.gamesPlayed + 1,
-						numberComplete: value.numberComplete,
-						timePlayed: value.timePlayed + 30
-					};
-				});
-				todaysWords = getWords(categories[Math.floor(Math.random() * categories.length)]);
-				gameState.currentShuffle = todaysWords['shuffledWords'][0];
-				gameState.currentWord = todaysWords.todaysCategory.words[0];
-				gameState.category = todaysWords.todaysCategory.name;
+				updateResults(false, 30, todaysDate);
 				gameState.state = 'end';
 			}
 		}, 150);
@@ -175,32 +156,32 @@
 	{/if}
 
 	<div class="game-container">
-		{#if gameState.state == 'start'}
+		{#if gameState.state == 'start' && lastPuzzle != todaysDate}
 			<div class="button">
 				<button on:click={startGame}>Play!</button>
 			</div>
 		{:else if gameState.state == 'playing'}
 			<div style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
-			<div class="category">
-				The Category: {gameState.category}
-			</div>
 			<div class="word">{gameState.currentShuffle}</div>
 			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 			<CompletedWords correctWords={gameState.correctWords} correctCount={gameState.correctCount} />
 		{:else if gameState.state == 'end'}
+			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
 			<GameEnd
 				correctCount={gameState.correctCount}
 				correctWords={gameState.correctWords}
 				lastWord={gameState.lastWord}
 			/>
-			<div class="button">
-				<button on:click={startGame}>Play Again!</button>
-			</div>
+		{:else if lastPuzzle == todaysDate}
+			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
 		{/if}
 	</div>
 </div>
 
 <style>
+	h3{
+		margin-top: 1rem;
+	}
 	@media (max-width: 600px) {
 		.game-container {
 			width: 100%;

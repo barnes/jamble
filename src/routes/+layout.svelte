@@ -16,7 +16,7 @@
 </script>
 <header>
 	<div class="title">
-		<h1>SCRAM</h1>
+		<h1><a href="https://scram.barnes.lol">SCRAM</a></h1>
 		<span>A word game.</span>
 	</div>
 </header>
@@ -32,6 +32,10 @@
 </footer>
 
 <style>
+	a {
+		color: var(--primary);
+		text-decoration: none;
+	}
 	.footer-content {
 		display: flex;
 		justify-content: space-between;
