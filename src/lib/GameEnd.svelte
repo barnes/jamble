@@ -20,7 +20,7 @@
 
 	const formatted = mm + '.' + dd + '.' + yyyy;
 
-	let shareString = `SCRAM: ${formatted}: `;
+	let shareString = `SCRAM ${formatted}: `;
 
 	for (let i = 0; i < 8; i++) {
 		if (i < correctCount) {
