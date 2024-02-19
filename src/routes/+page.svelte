@@ -14,7 +14,7 @@
 		}
 	};
 
-	const updateResults = (complete: boolean, timePlayed: number, lastPuzzle: string) => {
+	const updateResults = (complete: boolean, timePlayed: number, lastPuzzle: string, lastCorrect: number, lastWords: string, lastWord: string) => {
 		if (browser) {
 			const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
 			const currentNumberComplete = parseInt(
@@ -27,13 +27,24 @@
 				window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
 			window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
 			window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
+			window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
+			window.localStorage.setItem('scram-lastWords', lastWords);	
+			window.localStorage.setItem('scram-lastWord', lastWord);
 		}
 	};
-
-	let lastPuzzle = '';
+	
+	let lastPuzzle = $state('');
+	let lastCorrect = $state(0);
+	let lastWords = $state([]);
+	let lastWord = $state('');
 	if (browser) {
-		lastPuzzle = window.localStorage.getItem('scram-lastPuzzle');
+		lastPuzzle = window.localStorage.getItem('scram-lastPuzzle') || '';
+		lastCorrect = parseInt(window.localStorage.getItem('scram-lastCorrect') || '0');
+		lastWord = window.localStorage.getItem('scram-lastWord') || '';
+		lastWords = (window.localStorage.getItem('scram-lastWords')|| '').split(', ');
 	}
+
+
 
 	const today = new Date();
 	const yyyy = today.getFullYear();
@@ -100,7 +111,7 @@
 							timeToComplete
 						);
 					}
-					updateResults(true, timeToComplete, todaysDate);
+					updateResults(true, timeToComplete, todaysDate, gameState.correctCount, gameState.correctWords.join(', '), gameState.lastWord);
 					gameState.state = 'end';
 				}
 				gameState.currentShuffle = todaysPuzzle[gameState.currentWordCount][1];
@@ -128,7 +139,7 @@
 						timeToComplete
 					);
 				}
-				updateResults(false, 30, todaysDate);
+				updateResults(false, 30, todaysDate, gameState.correctCount, gameState.correctWords.join(', '), gameState.lastWord);
 				gameState.state = 'end';
 			}
 		}, 150);
@@ -136,11 +147,11 @@
 </script>
 
 <div class="game">
-	{#if gameState.state == 'start'}
+	{#if gameState.state == 'start' && lastPuzzle != todaysDate}
 		<article>
 			<p>
 				You've got 30 seconds to un-scramble as many words as possible. Your score is the number of
-				words you clear. Get a 'perfect' game by unscrambling all 8 words!
+				words you clear. Get a 'perfect' game by unscrambling all 6 words!
 			</p>
 			<p>
 				<em
@@ -169,6 +180,11 @@
 			/>
 		{:else if lastPuzzle == todaysDate}
 			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
+			<GameEnd
+				correctCount={lastCorrect}
+				correctWords={lastWords}
+				lastWord={lastWord}
+			/>
 		{/if}
 	</div>
 </div>

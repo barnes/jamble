@@ -6,8 +6,6 @@ export const puzzles = {
 		['computer', 'mcuprote'],
 		['building', 'nibudlig'],
 		['temperature', 'rerueatmpte'],
-		['calculator', 'aculratocolc'],
-		['encyclopedia', 'ypeaicldnoec']
 	],
 	'02.19.2024': [
 		['pen', 'npe'],
@@ -16,8 +14,6 @@ export const puzzles = {
 		['travel', 'levart'],
 		['mountain', 'ntainmou'],
 		['opportunity', 'ytinuoptorto'],
-		['chocolate', 'oalhcotelat'],
-		['congratulations', 'snotalutanigratoc']
 	],
 	'02.20.2024': [
 		['cup', 'puc'],
@@ -26,8 +22,6 @@ export const puzzles = {
 		['rainbow', 'wonibar'],
 		['adventure', 'retnudeva'],
 		['imagination', 'natiomigani'],
-		['achievement', 'vemnetaihcea'],
-		['responsibility', 'ylitibisponrisb']
 	],
 	'02.21.2024': [
 		['pot', 'top'],
@@ -36,8 +30,6 @@ export const puzzles = {
 		['telephone', 'onehpetloet'],
 		['discovery', 'yrevocsid'],
 		['inspiration', 'noitarpisni'],
-		['independence', 'necednepeind'],
-		['unforgettable', 'ttaegulofnber']
 	],
 	'02.22.2024': [
 		['box', 'box'],
@@ -46,8 +38,6 @@ export const puzzles = {
 		['microphone', 'enohpcorim'],
 		['confidence', 'encidnecof'],
 		['determination', 'noitamniretned'],
-		['communication', 'noitamunicatoic'],
-		['extraordinary', 'nairodnaryotxe']
 	],
 	'02.23.2024': [
 		['car', 'rac'],
@@ -56,8 +46,6 @@ export const puzzles = {
 		['telescope', 'esopletco'],
 		['satisfaction', 'noitasfactions'],
 		['perspectives', 'sectivperpse'],
-		['creativity', 'ytivaeirtcre'],
-		['phenomenon', 'nomehnopme']
 	],
 	'02.24.2024': [
 		['dog', 'odg'],
@@ -66,8 +54,6 @@ export const puzzles = {
 		['telescope', 'esopletco'],
 		['transformation', 'namtrofniamrot'],
 		['collaboration', 'noitaroballco'],
-		['imagination', 'natiomigani'],
-		['circumstance', 'ecnatsnimracruc']
 	],
 	'02.25.2024': [
 		['sun', 'nus'],
@@ -76,8 +62,6 @@ export const puzzles = {
 		['microscope', 'emosccpoere'],
 		['appreciation', 'noitaicireppa'],
 		['encouragement', 'netamnegracoren'],
-		['responsibility', 'ylitibisponrisb'],
-		['serendipity', 'ytidnepiresre']
 	],
 	'02.26.2024': [
 		['bed', 'deb'],
@@ -86,8 +70,6 @@ export const puzzles = {
 		['transportation', ' tatnriropnosact'],
 		['celebration', 'noitabralec'],
 		['perseverance', 'ecnevresenrep'],
-		['communication', 'noitamunicatoic'],
-		['imagination', 'natiomigani']
 	],
 	'02.27.2024': [
 		['cat', 'tac'],
@@ -96,7 +78,5 @@ export const puzzles = {
 		['opportunity', 'ytinuoptorto'],
 		['achievement', 'vemnetaihcea'],
 		['collaboration', 'noitaroballco'],
-		['imagination', 'natiomigani'],
-		['circumstance', 'ecnatsnimracruc']
 	]
 };

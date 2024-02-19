@@ -23,7 +23,7 @@
 
 	let shareString = `SCRAM ${formatted}: `;
 
-	for (let i = 0; i < 8; i++) {
+	for (let i = 0; i < 6; i++) {
 		if (i < correctCount) {
 			shareString = shareString + `✅`;
 		} else {
@@ -36,25 +36,27 @@
 		numberComplete: 0,
 		timePlayed: 0
 	};
+
+	if(browser){
+		results.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed'));
+		results.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete'));
+		results.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed'));
+	
+	}
+
 	onMount(() => {
-		if(browser){
-			results.gamesPlayed = window.localStorage.getItem('scram-gamesPlayed');
-			results.numberComplete = window.localStorage.getItem('scram-numberComplete');
-			results.timePlayed = window.localStorage.getItem('scram-timePlayed');
-		}
 		document.querySelector('.copy').addEventListener('click', () => {
 			copy(shareString);
 		});
 	})
 </script>
-
 <div class="grid top">
 	<div class="card">
 		<h2>Total Correct:</h2>
 		<article>
 			<span class="word large">{correctCount}</span>
 			:
-			<span class="word large">8</span>
+			<span class="word large">6</span>
 		</article>
 	</div>
 	<div class="card">
@@ -73,7 +75,7 @@
 	</div>
 </div>
 <div class="grid">
-	{#if correctCount != 8}
+	{#if correctCount != 6}
 		<div class="card">
 			<h2>Last Word:</h2>
 			<article>
@@ -97,6 +99,7 @@
 		</article>
 	</div>
 </div>
+
 
 <style>
 	.top {
