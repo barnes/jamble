@@ -32,8 +32,8 @@ export const puzzles = {
 		['inspiration', 'noitarpisni'],
 	],
 	'02.22.2024': [
-		['box', 'box'],
-		['dance', 'enced'],
+		['box', 'xbo'],
+		['dance', 'encad'],
 		['kitchen', 'nehctik'],
 		['microphone', 'enohpcorim'],
 		['confidence', 'encidnecof'],
