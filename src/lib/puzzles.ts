@@ -59,7 +59,7 @@ export const puzzles = {
 		['sun', 'nus'],
 		['read', 'daer'],
 		['bedroom', 'mredoob'],
-		['microscope', 'emosccpoere'],
+		['microscope', 'mosccpoire'],
 		['appreciation', 'noitaicireppa'],
 		['encouragement', 'netamnegracoren'],
 	],
