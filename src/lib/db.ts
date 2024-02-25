@@ -20,7 +20,7 @@ export const storeGame = (
 	category: string,
 	correctCount: number,
 	totalWords: number,
-	words: string[],
+	words: string[][],
 	correctWords: string[],
 	completeGame: boolean,
 	timeToComplete: number

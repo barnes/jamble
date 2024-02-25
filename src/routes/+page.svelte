@@ -1,37 +1,13 @@
 <script lang="ts">
-	import { categories } from '$lib/categories';
 	import { puzzles } from '$lib/puzzles';
+	import { correctGuess, gameOver, gameTick, getToday, initGame, updateLocalResults } from '$lib/logic';
 	import { storeGame } from '$lib/db';
 	import { browser, dev } from '$app/environment';
-	import GameEnd from '$lib/GameEnd.svelte';
-	import CompletedWords from '$lib/CompletedWords.svelte';
+	import GameEnd from '$lib/components/GameEnd.svelte';
+	import CompletedWords from '$lib/components/CompletedWords.svelte';
 	export const prerender = true;
 	export const ssr = false;
 
-	const updateLocalStorage = (key, value) => {
-		if (browser) {
-			window.localStorage.setItem(`scram-${key}`, `${value[key]}`);
-		}
-	};
-
-	const updateResults = (complete: boolean, timePlayed: number, lastPuzzle: string, lastCorrect: number, lastWords: string, lastWord: string) => {
-		if (browser) {
-			const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
-			const currentNumberComplete = parseInt(
-				window.localStorage.getItem('scram-numberComplete') || '0'
-			);
-			const currentTimePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
-
-			window.localStorage.setItem('scram-gamesPlayed', (currentGamesPlayed + 1).toString());
-			if (complete)
-				window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
-			window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
-			window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
-			window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
-			window.localStorage.setItem('scram-lastWords', lastWords);	
-			window.localStorage.setItem('scram-lastWord', lastWord);
-		}
-	};
 	
 	let lastPuzzle = $state('');
 	let lastCorrect = $state(0);
@@ -44,26 +20,15 @@
 		lastWords = (window.localStorage.getItem('scram-lastWords')|| '').split(', ');
 	}
 
-
-
-	const today = new Date();
-	const yyyy = today.getFullYear();
-	let mm = today.getMonth() + 1; // month is zero-based
-	let dd = today.getDate();
-
-	if (dd < 10) dd = '0' + dd;
-	if (mm < 10) mm = '0' + mm;
-
-	const todaysDate = mm + '.' + dd + '.' + yyyy;
+	const todaysDate = getToday()
 
 	let record = !dev;
 	let green = '#4c8577';
-	let red = '#FF5A5F';
-	let yellow = '#edcf8e';
 
 	const todaysPuzzle = puzzles[todaysDate];
 
-	let gameState = $state({
+
+	let gameState: GameState = $state({
 		timer: 0,
 		timerWidth: '100%',
 		timerColor: green,
@@ -83,64 +48,14 @@
 	);
 
 	const startGame = () => {
-		gameState.state = 'playing';
-		gameState.timer = 30000;
-		// gameState.guess = '';
-		gameState.correctCount = 0;
-		gameState.correctWords = [];
-		gameState.lastWord = '';
+		gameState = initGame(gameState);
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
-				gameState.guess = '';
-				gameState.currentWordCount++;
-				gameState.correctCount++;
-				gameState.correctWords.push(gameState.currentWord);
-				if (todaysPuzzle[gameState.currentWordCount] === undefined) {
-					clearInterval(timer);
-					gameState.completeGame = true;
-					gameState.lastWord = gameState.currentWord;
-					let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
-					if (record) {
-						storeGame(
-							'null',
-							gameState.correctCount,
-							todaysPuzzle.length,
-							todaysPuzzle,
-							gameState.correctWords,
-							gameState.completeGame,
-							timeToComplete
-						);
-					}
-					updateResults(true, timeToComplete, todaysDate, gameState.correctCount, gameState.correctWords.join(', '), gameState.lastWord);
-					gameState.state = 'end';
-				}
-				gameState.currentShuffle = todaysPuzzle[gameState.currentWordCount][1];
-				gameState.currentWord = todaysPuzzle[gameState.currentWordCount][0];
+				gameState = correctGuess(gameState, todaysPuzzle, timer, record, todaysDate);
 			}
-			gameState.timerWidth = `${(gameState.timer / 30000) * 100}%`;
-			gameState.timer -= 150;
-			if (gameState.timer < 15000 && gameState.timer > 10000) {
-				gameState.timerColor = yellow;
-			} else if (gameState.timer < 10000) {
-				gameState.timerColor = red;
-			}
+			gameState = gameTick(gameState);	
 			if (gameState.timer <= 0) {
-				clearInterval(timer);
-				gameState.lastWord = gameState.currentWord;
-				if (record) {
-					let timeToComplete = 30;
-					storeGame(
-						'null',
-						gameState.correctCount,
-						todaysPuzzle.length,
-						todaysPuzzle,
-						gameState.correctWords,
-						gameState.completeGame,
-						timeToComplete
-					);
-				}
-				updateResults(false, 30, todaysDate, gameState.correctCount, gameState.correctWords.join(', '), gameState.lastWord);
-				gameState.state = 'end';
+				gameState = gameOver(gameState, timer, record, todaysDate);
 			}
 		}, 150);
 	};
@@ -168,7 +83,7 @@
 			</div>
 		{:else if gameState.state == 'playing'}
 			<div style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
-			<div class="word">{gameState.currentShuffle}</div>
+			<div class="word" id="scambled">{gameState.currentShuffle}</div>
 			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 			<CompletedWords correctWords={gameState.correctWords} correctCount={gameState.correctCount} />
 		{:else if gameState.state == 'end'}

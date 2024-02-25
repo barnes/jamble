@@ -50,7 +50,7 @@
 		});
 	})
 </script>
-<div class="grid top">
+<div data-testid="completeGrid" class="grid top">
 	<div class="card">
 		<h2>Total Correct:</h2>
 		<article>

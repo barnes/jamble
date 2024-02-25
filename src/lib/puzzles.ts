@@ -5,7 +5,7 @@ export const puzzles = {
 		['window', 'wodwin'],
 		['computer', 'mcuprote'],
 		['building', 'nibudlig'],
-		['temperature', 'rerueatmpte'],
+		['temperature', 'rerueatmpte']
 	],
 	'02.19.2024': [
 		['pen', 'npe'],
@@ -13,7 +13,7 @@ export const puzzles = {
 		['dress', 'ssedr'],
 		['travel', 'levart'],
 		['mountain', 'ntainmou'],
-		['opportunity', 'ytinuoptorto'],
+		['opportunity', 'ytinuoptorto']
 	],
 	'02.20.2024': [
 		['cup', 'puc'],
@@ -21,7 +21,7 @@ export const puzzles = {
 		['flower', 'reolfw'],
 		['rainbow', 'wonibar'],
 		['adventure', 'retnudeva'],
-		['imagination', 'natiomigani'],
+		['imagination', 'natiomigani']
 	],
 	'02.21.2024': [
 		['pot', 'top'],
@@ -29,7 +29,7 @@ export const puzzles = {
 		['garden', 'nerdga'],
 		['telephone', 'onehpetloet'],
 		['discovery', 'yrevocsid'],
-		['inspiration', 'noitarpisni'],
+		['inspiration', 'noitarpisni']
 	],
 	'02.22.2024': [
 		['box', 'xbo'],
@@ -37,7 +37,7 @@ export const puzzles = {
 		['kitchen', 'nehctik'],
 		['microphone', 'enohpcorim'],
 		['confidence', 'encidnecof'],
-		['determination', 'noitamniretned'],
+		['determination', 'noitamniretned']
 	],
 	'02.23.2024': [
 		['car', 'rac'],
@@ -45,7 +45,7 @@ export const puzzles = {
 		['library', 'yrabril'],
 		['telescope', 'esopletco'],
 		['satisfaction', 'noitasfactions'],
-		['perspectives', 'sectivperpse'],
+		['perspectives', 'sectivperpse']
 	],
 	'02.24.2024': [
 		['dog', 'odg'],
@@ -53,7 +53,7 @@ export const puzzles = {
 		['bathroom', 'moortbah'],
 		['telescope', 'esopletco'],
 		['transformation', 'namtrofniamrot'],
-		['collaboration', 'noitaroballco'],
+		['collaboration', 'noitaroballco']
 	],
 	'02.25.2024': [
 		['sun', 'nus'],
@@ -61,22 +61,83 @@ export const puzzles = {
 		['bedroom', 'mredoob'],
 		['microscope', 'emosccpoere'],
 		['appreciation', 'noitaicireppa'],
-		['encouragement', 'netamnegracoren'],
+		['encouragement', 'netamnegracoren']
 	],
 	'02.26.2024': [
-		['bed', 'deb'],
-		['write', 'ewrit'],
-		['living room', 'moor gnivil'],
-		['transportation', ' tatnriropnosact'],
-		['celebration', 'noitabralec'],
-		['perseverance', 'ecnevresenrep'],
+		['ant', 'tan'],
+		['bear', 'bare'],
+		['could', 'locud'],
+		['dragon', 'ngardo'],
+		['friends', 'rdfinesi']
 	],
 	'02.27.2024': [
-		['cat', 'tac'],
-		['play', 'yalp'],
-		['playground', 'ydnuorglap'],
-		['opportunity', 'ytinuoptorto'],
-		['achievement', 'vemnetaihcea'],
-		['collaboration', 'noitaroballco'],
+		['cat', 'atc'],
+		['tree', 'reet'],
+		['spoil', 'ilops'],
+		['benefit', 'tfnebei'],
+		['contract', 'tcnrocta']
+	],
+	'02.28.2024': [
+		['dog', 'odg'],
+		['bird', 'brid'],
+		['smile', 'miles'],
+		['window', 'wodwin'],
+		['computer', 'mcuprote']
+	],
+	'02.29.2024': [
+		['pen', 'npe'],
+		['road', 'daor'],
+		['drive', 'vired'],
+		['system', 'tesmsy'],
+		['general', 'eenalrg']
+	],
+	'03.01.2024': [
+		['sun', 'nsu'],
+		['fire', 'eifr'],
+		['wheels', 'wesehl'],
+		['promote', 'poortme'],
+		['validity', 'ydlitavi']
+	],
+	'03.02.2024': [
+		['box', 'xbo'],
+		['mile', 'elmi'],
+		['angels', 'lnegas'],
+		['volunteer', 'eonlttrevuer'],
+		['affordable', 'aabodefrle']
+	],
+	'03.03.2024': [
+		['toy', 'yot'],
+		['song', 'gson'],
+		['prize', 'rezip'],
+		['freedom', 'odeefmr'],
+		['building', 'dilgnubi']
+	],
+	'03.04.2024': [
+		['yes', 'sey'],
+		['food', 'doof'],
+		['water', 'taewr'],
+		['network', 'knetwor'],
+		['original', 'agilnoir']
+	],
+	'03.05.2024': [
+		['pie', 'iep'],
+		['admit', 'mdiata'],
+		['screen', 'recsen'],
+		['correct', 'toccrer'],
+		['identify', 'iyetdifin']
+	],
+	'03.06.2024': [
+		['ear', 'era'],
+		['hill', 'lihl'],
+		['plane', 'nlaep'],
+		['teacher', 'cetehar'],
+		['capacity', 'cpaiatyc']
+	],
+	'03.07.2024': [
+		['age', 'gae'],
+		['test', 'stte'],
+		['audio', 'uiado'],
+		['control', 'tonotcrl'],
+		['install', 'lsnaotli']
 	]
 };
