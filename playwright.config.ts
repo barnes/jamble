@@ -6,7 +6,14 @@ const config: PlaywrightTestConfig = {
 		port: 4173
 	},
 	testDir: 'tests',
-	testMatch: /(.+\.)?(test|spec)\.[jt]s/
+	testMatch: /(.+\.)?(test|spec)\.[jt]s/,
+	reporter: 'dot',
+	use: {
+		video:{
+			mode: 'on',
+			size: { width: 640, height: 480}
+		} 
+	},
 };
 
 export default config;

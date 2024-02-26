@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { puzzles } from '$lib/puzzles';
-	import { correctGuess, gameOver, gameTick, getToday, initGame, updateLocalResults } from '$lib/logic';
+	import {
+		correctGuess,
+		gameOver,
+		gameTick,
+		getToday,
+		initGame,
+		updateLocalResults
+	} from '$lib/logic';
 	import { storeGame } from '$lib/db';
 	import { browser, dev } from '$app/environment';
 	import GameEnd from '$lib/components/GameEnd.svelte';
@@ -8,7 +15,6 @@
 	export const prerender = true;
 	export const ssr = false;
 
-	
 	let lastPuzzle = $state('');
 	let lastCorrect = $state(0);
 	let lastWords = $state([]);
@@ -17,16 +23,15 @@
 		lastPuzzle = window.localStorage.getItem('scram-lastPuzzle') || '';
 		lastCorrect = parseInt(window.localStorage.getItem('scram-lastCorrect') || '0');
 		lastWord = window.localStorage.getItem('scram-lastWord') || '';
-		lastWords = (window.localStorage.getItem('scram-lastWords')|| '').split(', ');
+		lastWords = (window.localStorage.getItem('scram-lastWords') || '').split(', ');
 	}
 
-	const todaysDate = getToday()
+	const todaysDate = getToday();
 
 	let record = !dev;
 	let green = '#4c8577';
 
 	const todaysPuzzle = puzzles[todaysDate];
-
 
 	let gameState: GameState = $state({
 		timer: 0,
@@ -53,9 +58,34 @@
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
 				gameState = correctGuess(gameState, todaysPuzzle, timer, record, todaysDate);
 			}
-			gameState = gameTick(gameState);	
+			gameState = gameTick(gameState);
 			if (gameState.timer <= 0) {
-				gameState = gameOver(gameState, timer, record, todaysDate);
+				// gameState = gameOver(gameState, timer, record, todaysDate, todaysPuzzle);
+				clearInterval(timer);
+				gameState.lastWord = gameState.currentWord;
+				if (record) {
+					let timeToComplete = 30;
+					storeGame(
+						'null',
+						gameState.correctCount,
+						todaysPuzzle.length,
+						todaysPuzzle,
+						gameState.correctWords,
+						gameState.completeGame,
+						timeToComplete
+					);
+				}
+				updateLocalResults(
+					false,
+					30,
+					todaysDate,
+					gameState.correctCount,
+					gameState.correctWords.join(', '),
+					gameState.lastWord
+				);
+				gameState.state = 'end';
+				gameState.currentShuffle = '';
+				gameState.currentWord = '';
 			}
 		}, 150);
 	};
@@ -82,8 +112,8 @@
 				<button on:click={startGame}>Play!</button>
 			</div>
 		{:else if gameState.state == 'playing'}
-			<div style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
-			<div class="word" id="scambled">{gameState.currentShuffle}</div>
+			<div data-testid="timer" style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
+			<div class="word" data-testid="scrambled-word" id="scambled">{gameState.currentShuffle}</div>
 			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
 			<CompletedWords correctWords={gameState.correctWords} correctCount={gameState.correctCount} />
 		{:else if gameState.state == 'end'}
@@ -95,17 +125,13 @@
 			/>
 		{:else if lastPuzzle == todaysDate}
 			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
-			<GameEnd
-				correctCount={lastCorrect}
-				correctWords={lastWords}
-				lastWord={lastWord}
-			/>
+			<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} />
 		{/if}
 	</div>
 </div>
 
 <style>
-	h3{
+	h3 {
 		margin-top: 1rem;
 	}
 	@media (max-width: 600px) {

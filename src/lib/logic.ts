@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+// import { browser } from '$app/environment';
 import { storeGame } from './db';
 
 export interface GameState {
@@ -16,11 +16,11 @@ export interface GameState {
 	lastWord: string;
 }
 
-export const updateLocalStorage = (key: string, value: string) => {
-	if (browser) {
-		window.localStorage.setItem(`scram-${key}`, `${value[key]}`);
-	}
-};
+// export const updateLocalStorage = (key: string, value: string) => {
+// 	if (browser) {
+// 		window.localStorage.setItem(`scram-${key}`, `${value[key]}`);
+// 	}
+// };
 
 export const updateLocalResults = (
 	complete: boolean,
@@ -30,22 +30,20 @@ export const updateLocalResults = (
 	lastWords: string,
 	lastWord: string
 ) => {
-	if (browser) {
-		const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
-		const currentNumberComplete = parseInt(
-			window.localStorage.getItem('scram-numberComplete') || '0'
-		);
-		const currentTimePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
+	const currentGamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
+	const currentNumberComplete = parseInt(
+		window.localStorage.getItem('scram-numberComplete') || '0'
+	);
+	const currentTimePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
 
-		window.localStorage.setItem('scram-gamesPlayed', (currentGamesPlayed + 1).toString());
-		if (complete)
-			window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
-		window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
-		window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
-		window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
-		window.localStorage.setItem('scram-lastWords', lastWords);
-		window.localStorage.setItem('scram-lastWord', lastWord);
-	}
+	window.localStorage.setItem('scram-gamesPlayed', (currentGamesPlayed + 1).toString());
+	if (complete)
+		window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
+	window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
+	window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
+	window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
+	window.localStorage.setItem('scram-lastWords', lastWords);
+	window.localStorage.setItem('scram-lastWord', lastWord);
 };
 
 export const getToday = () => {
@@ -126,7 +124,13 @@ export const gameTick = (gameState: GameState): GameState => {
 	return gameState;
 };
 
-export const gameOver = (gameState: GameState, timer: NodeJS.Timeout, record: boolean, todaysDate: string): GameState => {
+export const gameOver = (
+	gameState: GameState,
+	timer: NodeJS.Timeout,
+	record: boolean,
+	todaysDate: string,
+	todaysPuzzle: string[][]
+): GameState => {
 	clearInterval(timer);
 	gameState.lastWord = gameState.currentWord;
 	if (record) {
@@ -150,5 +154,7 @@ export const gameOver = (gameState: GameState, timer: NodeJS.Timeout, record: bo
 		gameState.lastWord
 	);
 	gameState.state = 'end';
+	gameState.currentShuffle = '';
+	gameState.currentWord = '';
 	return gameState;
 };

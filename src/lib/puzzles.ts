@@ -7,14 +7,14 @@ export const puzzles = {
 		['building', 'nibudlig'],
 		['temperature', 'rerueatmpte']
 	],
-	'02.19.2024': [
-		['pen', 'npe'],
-		['sail', 'lais'],
-		['dress', 'ssedr'],
-		['travel', 'levart'],
-		['mountain', 'ntainmou'],
-		['opportunity', 'ytinuoptorto']
-	],
+	// '02.19.2024': [
+	// 	['pen', 'npe'],
+	// 	['sail', 'lais'],
+	// 	['dress', 'ssedr'],
+	// 	['travel', 'levart'],
+	// 	['mountain', 'ntainmou'],
+	// 	['opportunity', 'ytinuoptorto']
+	// ],
 	'02.20.2024': [
 		['cup', 'puc'],
 		['laugh', 'ghual'],
@@ -23,52 +23,52 @@ export const puzzles = {
 		['adventure', 'retnudeva'],
 		['imagination', 'natiomigani']
 	],
-	'02.21.2024': [
-		['pot', 'top'],
-		['smile', 'emils'],
-		['garden', 'nerdga'],
-		['telephone', 'onehpetloet'],
-		['discovery', 'yrevocsid'],
-		['inspiration', 'noitarpisni']
-	],
-	'02.22.2024': [
-		['box', 'xbo'],
-		['dance', 'encad'],
-		['kitchen', 'nehctik'],
-		['microphone', 'enohpcorim'],
-		['confidence', 'encidnecof'],
-		['determination', 'noitamniretned']
-	],
-	'02.23.2024': [
-		['car', 'rac'],
-		['jump', 'pmju'],
-		['library', 'yrabril'],
-		['telescope', 'esopletco'],
-		['satisfaction', 'noitasfactions'],
-		['perspectives', 'sectivperpse']
-	],
-	'02.24.2024': [
-		['dog', 'odg'],
-		['sing', 'gnis'],
-		['bathroom', 'moortbah'],
-		['telescope', 'esopletco'],
-		['transformation', 'namtrofniamrot'],
-		['collaboration', 'noitaroballco']
-	],
+	// '02.21.2024': [
+	// 	['pot', 'top'],
+	// 	['smile', 'emils'],
+	// 	['garden', 'nerdga'],
+	// 	['telephone', 'onehpetloet'],
+	// 	['discovery', 'yrevocsid'],
+	// 	['inspiration', 'noitarpisni']
+	// ],
+	// '02.22.2024': [
+	// 	['box', 'xbo'],
+	// 	['dance', 'encad'],
+	// 	['kitchen', 'nehctik'],
+	// 	['microphone', 'enohpcorim'],
+	// 	['confidence', 'encidnecof'],
+	// 	['determination', 'noitamniretned']
+	// ],
+	// '02.23.2024': [
+	// 	['car', 'rac'],
+	// 	['jump', 'pmju'],
+	// 	['library', 'yrabril'],
+	// 	['telescope', 'esopletco'],
+	// 	['satisfaction', 'noitasfactions'],
+	// 	['perspectives', 'sectivperpse']
+	// ],
+	// '02.24.2024': [
+	// 	['dog', 'odg'],
+	// 	['sing', 'gnis'],
+	// 	['bathroom', 'moortbah'],
+	// 	['telescope', 'esopletco'],
+	// 	['transformation', 'namtrofniamrot'],
+	// 	['collaboration', 'noitaroballco']
+	// ],
 	'02.25.2024': [
 		['sun', 'nus'],
 		['read', 'daer'],
 		['bedroom', 'mredoob'],
-		['microscope', 'emosccpoere'],
-		['appreciation', 'noitaicireppa'],
-		['encouragement', 'netamnegracoren']
+		['microscope', 'mosccpoire'],
+		['appreciation', 'naipeciaprto'],
+		['encouragement', 'aecougrtemenn']
 	],
 	'02.26.2024': [
 		['ant', 'tan'],
 		['bear', 'bare'],
 		['could', 'locud'],
 		['dragon', 'ngardo'],
-		['friends', 'rdfinesi']
+		['friends', 'rdfnesi']
 	],
 	'02.27.2024': [
 		['cat', 'atc'],
@@ -102,8 +102,8 @@ export const puzzles = {
 		['box', 'xbo'],
 		['mile', 'elmi'],
 		['angels', 'lnegas'],
-		['volunteer', 'eonlttrevuer'],
-		['affordable', 'aabodefrle']
+		['volunteer', 'eonltevur'],
+		['affordable', 'aabodffrle']
 	],
 	'03.03.2024': [
 		['toy', 'yot'],
@@ -121,10 +121,10 @@ export const puzzles = {
 	],
 	'03.05.2024': [
 		['pie', 'iep'],
-		['admit', 'mdiata'],
+		['admit', 'mdiat'],
 		['screen', 'recsen'],
 		['correct', 'toccrer'],
-		['identify', 'iyetdifin']
+		['identify', 'iyetdifn']
 	],
 	'03.06.2024': [
 		['ear', 'era'],
@@ -137,7 +137,7 @@ export const puzzles = {
 		['age', 'gae'],
 		['test', 'stte'],
 		['audio', 'uiado'],
-		['control', 'tonotcrl'],
-		['install', 'lsnaotli']
+		['control', 'tonocrl'],
+		['install', 'lsnatli']
 	]
 };

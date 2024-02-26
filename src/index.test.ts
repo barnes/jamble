@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { puzzles } from '$lib/puzzles';
 import { getToday, initGame, correctGuess, type GameState } from './lib/logic';
 
 describe('initGame test', () => {
@@ -18,6 +19,21 @@ describe('initGame test', () => {
 	};
 	it('initializes the game state', () => {
 		expect(initGame(gameStateStart)).toEqual(gameStatePlaying);
+	});
+});
+
+describe('Validate all puzzles', () => {
+	Object.keys(puzzles).forEach((date) => {
+		it(`validates ${date}`, () => {
+			puzzles[date].forEach((puzzle) => {
+				console.log(puzzle);
+				expect(puzzle[0].length).toBe(puzzle[1].length);
+				let wordLetters = puzzle[0].split('').sort();
+				let scrambledLetters = puzzle[1].split('').sort();
+				console.log(wordLetters, scrambledLetters)
+				expect(wordLetters.toString() === scrambledLetters.toString()).toBe(true);
+			});
+		});
 	});
 });
 
