@@ -30,7 +30,7 @@ jobs:
       - name: Build App
         run: npm run build
       - name: Run Preview Server
-        run: npm run preview
+        run: npm run preview &
       - name: Run Playwright Tests
         run: npm run test
       - name: Deploy Project Artifacts to Vercel
