@@ -2,12 +2,10 @@
 
 A simple word game.
 
-# TODO
-- Add in local storage of test results. 
-    - improve here. what do I want to store?
-    - number of games played
-    - a count for 3, 4, 5, 6, 7 and 8 count games.
-    - time played in seconds.
-- Styling clean up.
-- Fix up the list
-- Implement one game per day.
+Feel free to read more about this repo on my blog: [barnes.lol/scram](https://barnes.lol/scram)
+
+# Stack
+- Sveltekit
+- Picocss
+- Turso
+- Vitest / Playwright
