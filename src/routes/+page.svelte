@@ -122,10 +122,11 @@
 				correctCount={gameState.correctCount}
 				correctWords={gameState.correctWords}
 				lastWord={gameState.lastWord}
+				todaysPuzzle={todaysPuzzle}
 			/>
 		{:else if lastPuzzle == todaysDate}
 			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
-			<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} />
+			<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} todaysPuzzle={todaysPuzzle}/>
 		{/if}
 	</div>
 </div>

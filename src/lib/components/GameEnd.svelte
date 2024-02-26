@@ -3,11 +3,13 @@
 	let {
 		correctCount,
 		correctWords,
-		lastWord
+		lastWord,
+		todaysPuzzle
 	}: {
 		correctCount: number;
 		correctWords: string[];
 		lastWord: string;
+		todaysPuzzle: string[][];
 	} = $props();
 	import copy from 'copy-to-clipboard';
 	import { browser } from '$app/environment';
@@ -54,9 +56,9 @@
 	<div class="card">
 		<h2>Total Correct:</h2>
 		<article>
-			<span class="word large">{correctCount}</span>
+			<span data-testid="correct-count" class="word large">{correctCount}</span>
 			:
-			<span class="word large">6</span>
+			<span data-testid="total-count" class="word large">{todaysPuzzle.length}</span>
 		</article>
 	</div>
 	<div class="card">
