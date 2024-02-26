@@ -1,6 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { getToday } from '../src/lib/logic';
 import { puzzles } from '../src/lib/puzzles';
+
+export const getToday = () => {
+	const today = new Date();
+	const yyyy = today.getFullYear();
+	let mm = today.getMonth() + 1; // month is zero-based
+	let dd = today.getDate();
+
+	if (dd < 10) dd = '0' + dd;
+	if (mm < 10) mm = '0' + mm;
+
+	return mm + '.' + dd + '.' + yyyy;
+};
 
 const tryToSolve = async (page, todaysPuzzle, index) => {
   console.log('Trying to solve', index);
@@ -29,6 +40,7 @@ const scramble = (word: string): string => {
     return 0.5 - Math.random();
   }).join('');
 }
+
 
 test('Solve the puzzle', async ({ page }) => {
   test.slow();
