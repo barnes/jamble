@@ -42,7 +42,7 @@ test('Solve the puzzle', async ({ page }) => {
   }
   await page.waitForTimeout(1000);
   await expect(page.getByRole('heading', { name: 'Thanks for playing. Come back' })).toBeVisible();
-  await expect(page.getByText('SCRAM 02.25.2024: ✅✅✅✅✅✅')).toBeVisible();
+  await expect(page.getByText('✅✅✅✅✅✅')).toBeVisible();
 });
 
 test('Fail the puzzle', async ({ page }) => {
@@ -59,5 +59,5 @@ test('Fail the puzzle', async ({ page }) => {
   console.log('Skipping last two words, waiting for time to expire.');
   await page.waitForTimeout((parseInt(time) * 1000)+2000);
   await expect(page.getByRole('heading', { name: 'Thanks for playing. Come back' })).toBeVisible();
-  await expect(page.getByText('SCRAM 02.25.2024: ✅✅✅✅❌❌')).toBeVisible();
+  await expect(page.getByText('✅✅✅✅❌❌')).toBeVisible();
 });
