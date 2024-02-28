@@ -37,8 +37,11 @@ export const updateLocalResults = (
 	const currentTimePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
 
 	window.localStorage.setItem('scram-gamesPlayed', (currentGamesPlayed + 1).toString());
-	if (complete)
+	if (complete) {
 		window.localStorage.setItem('scram-numberComplete', (currentNumberComplete + 1).toString());
+	} else {
+		window.localStorage.setItem('scram-numberComplete', currentNumberComplete.toString());
+	}
 	window.localStorage.setItem('scram-timePlayed', (currentTimePlayed + timePlayed).toString());
 	window.localStorage.setItem('scram-lastPuzzle', lastPuzzle);
 	window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
