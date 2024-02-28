@@ -1,6 +1,5 @@
-const url = 'https://scram-player-data-barnes.turso.io/v2/pipeline';
-const authToken =
-	'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDgxMTA4OTMsImlkIjoiNzQ1N2FmYTEtY2NmZi0xMWVlLTlhYzAtZjJhZTA4MzhmMjg1In0.FJTlnJ6wc3SViRNjk3MyxYXAQpzPP_q8o36rvUPibOVzrdLtwk9JiUIALf7H1vPR71P42HlXdl0tPtGPk-PUCw';
+import { PUBLIC_TURSO_URL, PUBLIC_TURSO_AUTH_TOKEN } from '$env/static/public';
+const url = PUBLIC_TURSO_URL; 
 
 const createDbQuery = `CREATE TABLE games (
          ID INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -28,7 +27,7 @@ export const storeGame = (
 	fetch(url, {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${authToken}`,
+			Authorization: `Bearer ${PUBLIC_TURSO_AUTH_TOKEN}`,
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
@@ -44,7 +43,7 @@ export const getRunCount = async () => {
 	const data = await fetch(url, {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${authToken}`,
+			Authorization: `Bearer ${PUBLIC_TURSO_AUTH_TOKEN}`,
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
