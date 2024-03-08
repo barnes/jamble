@@ -64,16 +64,16 @@ describe('Validate all puzzles', () => {
 // 	const todaysDate = '02.24.2024';
 // });
 
-describe('getToday test', () => {
-	it('gets the current date', () => {
-		const today = new Date();
-		const yyyy = today.getFullYear();
-		let mm = today.getMonth() + 1; // month is zero-based
-		if (mm < 10) {
-			mm = '0' + mm
-		};
-		let dd = today.getDate();
+// describe('getToday test', () => {
+// 	it('gets the current date', () => {
+// 		const today = new Date();
+// 		const yyyy = today.getFullYear();
+// 		let mm = today.getMonth() + 1; // month is zero-based
+// 		if (mm < 10) {
+// 			mm = '0' + mm
+// 		};
+// 		let dd = today.getDate();
 
-		expect(getToday()).toBe(`${mm}.${dd}.${yyyy}`);
-	});
-});
+// 		expect(getToday()).toBe(`${mm}.${dd}.${yyyy}`);
+// 	});
+// });

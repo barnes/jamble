@@ -139,5 +139,84 @@ export const puzzles = {
 		['audio', 'uiado'],
 		['control', 'tonocrl'],
 		['install', 'lsnatli']
-	]
+	],
+	'03.08.2024': [
+['cpu', 'upc'],
+['keys', 'ykes'],
+['codes', 'cdoes'],
+['chips', 'hcisp'],
+['placid', 'dilcap']
+],
+
+'03.09.2024': [
+['bit', 'tib'],
+['hash', 'hsah'],
+['crypt', 'rypct'],
+['builds', 'dlbsiu'],
+['debugger', 'ubgredge']
+],
+
+'03.10.2024': [
+['car', 'rac'],
+['node', 'oden'],
+['rails', 'lsair'],
+['faulty', 'tfylau'],
+['hazard', 'zadrah']
+],
+
+'03.11.2024': [
+['rig', 'gri'],
+['rest', 'rset'],
+['stack', 'cktsa'],
+['attack', 'takcta'],
+['capsize', 'apzseci']
+],
+
+'03.12.2024': [
+['cow', 'wco'],
+['shop', 'hpso'],
+['drive', 'eidvr'],
+['abacus', 'acsuba'],
+['harpoon', 'phorona']
+],
+
+'03.13.2024': [
+['bot', 'tob'],
+['mind', 'ndim'],
+['robot', 'broto'],
+['frugal', 'gulraf'],
+['actress', 'ascters']
+],
+
+'03.14.2024': [
+['apt', 'pat'],
+['worm', 'wmor'],
+['walls', 'wllsa'],
+['emboss', 'bsosem'],
+['luggage', 'ugealgg']
+],
+
+'03.15.2024': [
+['fat', 'taf'],
+['blog', 'golb'],
+['souls', 'lsuso'],
+['cactus', 'tusacc'],
+['intrude', 'rundite']
+],
+
+'03.16.2024': [
+['pad', 'dpa'],
+['time', 'tiem'],
+['bots', 'obst'],
+['jigsaw', 'swgjia'],
+['educator', 'eucatord']
+],
+
+'03.17.2024': [
+['app', 'ppa'],
+['fund', 'dnfu'],
+['pivot', 'vpoti'],
+['sandal', 'sldana'],
+['disrupt', 'dtsirpu']
+]
 };
