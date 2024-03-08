@@ -25,7 +25,7 @@
 
 	let shareString = `SCRAM ${formatted}: `;
 
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 5; i++) {
 		if (i < correctCount) {
 			shareString = shareString + `✅`;
 		} else {

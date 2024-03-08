@@ -95,7 +95,7 @@
 	{#if gameState.state == 'start' && lastPuzzle != todaysDate}
 		<article>
 			<p>
-				You've got 30 seconds to un-scramble as many words as possible. Your score is the number of
+				You've got 30 seconds to unscramble as many words as possible. Your score is the number of
 				words you clear. Get a 'perfect' game by unscrambling all 6 words!
 			</p>
 			<p>
@@ -192,3 +192,6 @@
 		margin: 0;
 	}
 </style>
+
+
+
