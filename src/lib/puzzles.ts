@@ -141,82 +141,153 @@ export const puzzles = {
 		['install', 'lsnatli']
 	],
 	'03.08.2024': [
-['cpu', 'upc'],
-['keys', 'ykes'],
-['codes', 'cdoes'],
-['chips', 'hcisp'],
-['placid', 'dilcap']
-],
+		['cpu', 'upc'],
+		['keys', 'ykes'],
+		['codes', 'cdoes'],
+		['chips', 'hcisp'],
+		['placid', 'dilcap']
+	],
 
-'03.09.2024': [
-['bit', 'tib'],
-['hash', 'hsah'],
-['crypt', 'rypct'],
-['builds', 'dlbsiu'],
-['debugger', 'ubgredge']
-],
+	'03.09.2024': [
+		['bit', 'tib'],
+		['hash', 'hsah'],
+		['crypt', 'rypct'],
+		['builds', 'dlbsiu'],
+		['debugger', 'ubgredge']
+	],
 
-'03.10.2024': [
-['car', 'rac'],
-['node', 'oden'],
-['rails', 'lsair'],
-['faulty', 'tfylau'],
-['hazard', 'zadrah']
-],
+	'03.10.2024': [
+		['car', 'rac'],
+		['node', 'oden'],
+		['rails', 'lsair'],
+		['faulty', 'tfylau'],
+		['hazard', 'zadrah']
+	],
 
-'03.11.2024': [
-['rig', 'gri'],
-['rest', 'rset'],
-['stack', 'cktsa'],
-['attack', 'takcta'],
-['capsize', 'apzseci']
-],
+	'03.11.2024': [
+		['rig', 'gri'],
+		['rest', 'rset'],
+		['stack', 'cktsa'],
+		['attack', 'takcta'],
+		['capsize', 'apzseci']
+	],
 
-'03.12.2024': [
-['cow', 'wco'],
-['shop', 'hpso'],
-['drive', 'eidvr'],
-['abacus', 'acsuba'],
-['harpoon', 'phorona']
-],
+	'03.12.2024': [
+		['cow', 'wco'],
+		['shop', 'hpso'],
+		['drive', 'eidvr'],
+		['abacus', 'acsuba'],
+		['harpoon', 'phorona']
+	],
 
-'03.13.2024': [
-['bot', 'tob'],
-['mind', 'ndim'],
-['robot', 'broto'],
-['frugal', 'gulraf'],
-['actress', 'ascters']
-],
+	'03.13.2024': [
+		['bot', 'tob'],
+		['mind', 'ndim'],
+		['robot', 'broto'],
+		['frugal', 'gulraf'],
+		['actress', 'ascters']
+	],
 
-'03.14.2024': [
-['apt', 'pat'],
-['worm', 'wmor'],
-['walls', 'wllsa'],
-['emboss', 'bsosem'],
-['luggage', 'ugealgg']
-],
+	'03.14.2024': [
+		['apt', 'pat'],
+		['worm', 'wmor'],
+		['walls', 'wllsa'],
+		['emboss', 'bsosem'],
+		['luggage', 'ugealgg']
+	],
 
-'03.15.2024': [
-['fat', 'taf'],
-['blog', 'golb'],
-['souls', 'lsuso'],
-['cactus', 'tusacc'],
-['intrude', 'rundite']
-],
+	'03.15.2024': [
+		['fat', 'taf'],
+		['blog', 'golb'],
+		['souls', 'lsuso'],
+		['cactus', 'tusacc'],
+		['intrude', 'rundite']
+	],
 
-'03.16.2024': [
-['pad', 'dpa'],
-['time', 'tiem'],
-['bots', 'obst'],
-['jigsaw', 'swgjia'],
-['educator', 'eucatord']
-],
+	'03.16.2024': [
+		['pad', 'dpa'],
+		['time', 'tiem'],
+		['bots', 'obst'],
+		['jigsaw', 'swgjia'],
+		['educator', 'eucatord']
+	],
 
-'03.17.2024': [
-['app', 'ppa'],
-['fund', 'dnfu'],
-['pivot', 'vpoti'],
-['sandal', 'sldana'],
-['disrupt', 'dtsirpu']
-]
+	'03.17.2024': [
+		['app', 'ppa'],
+		['fund', 'dnfu'],
+		['pivot', 'vpoti'],
+		['sandal', 'sldana'],
+		['disrupt', 'dtsirpu']
+	],
+	'03.20.2024': [
+		['cat', 'tca'],
+		['book', 'obko'],
+		['family', 'flmyia'],
+		['weather', 'erthwae'],
+		['holiday', 'yoilhda']
+	],
+	'03.21.2024': [
+		['sun', 'usn'],
+		['beach', 'bhcae'],
+		['sandals', 'snldaas'],
+		['vacation', 'avcnoita'],
+		['relaxing', 'gnxilare']
+	],
+	'03.22.2024': [
+		['job', 'obj'],
+		['money', 'ynmeo'],
+		['company', 'ycpnamo'],
+		['manager', 'anmarge'],
+		['employee', 'eeymolpe']
+	],
+	'03.23.2024': [
+		['car', 'rac'],
+		['truck', 'kcurt'],
+		['highway', 'hwayghi'],
+		['vehicle', 'evhclei'],
+		['gasoline', 'egnsoali']
+	],
+	'03.24.2024': [
+		['dog', 'ogd'],
+		['puppy', 'pyppu'],
+		['canine', 'enican'],
+		['leashes', 'seheals'],
+		['veterinary', 'teervniray']
+	],
+	'03.25.2024': [
+		['run', 'nru'],
+		['jogs', 'sgjo'],
+		['marathons', 'amnrstoha'],
+		['exercise', 'eecxrsei'],
+		['endurance', 'edcuarenn']
+	],
+	'03.26.2024': [
+		['red', 'edr'],
+		['blue', 'uleb'],
+		['rainbow', 'oawbinr'],
+		['colorful', 'lroocflu'],
+		['painting', 'gnipnati']
+	],
+	'03.27.2024': [
+		['eat', 'eta'],
+		['food', 'ofdo'],
+		['restaurant', 'rntruaates'],
+		['delicious', 'dslcuiieo'],
+		['ingredients', 'isngreetdni']
+	],
+	'03.28.2024': [
+		['fly', 'ylf'],
+		['plane', 'eplna'],
+		['luggage', 'ggluaeg'],
+		['destination', 'dnnoiatseti'],
+		['adventure', 'aderuevtn']
+	],
+
+	'03.29.2024': [
+		['home', 'hmeo'],
+		['cozy', 'czyo'],
+		['house', 'ehous'],
+		['backyard', 'dabckyar'],
+		['furniture', 'ufenirrtu'],
+	]
 };
