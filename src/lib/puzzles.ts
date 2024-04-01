@@ -288,6 +288,125 @@ export const puzzles = {
 		['cozy', 'czyo'],
 		['house', 'ehous'],
 		['backyard', 'dabckyar'],
-		['furniture', 'ufenirrtu'],
+		['furniture', 'ufenirrtu']
+	],
+	'03.31.2024': [
+		['hike', 'ehik'],
+
+		['trek', 'ekrt'],
+
+		['adventure', 'adeenrtvu'],
+
+		['explore', 'eeloprx'],
+
+		['wanderlust', 'ntdaeswrlu']
+	],
+
+	'04.01.2024': [
+		['travel', 'aelrtv'],
+
+		['journey', 'ejnoruy'],
+
+		['destination', 'dtesinnatio'],
+
+		['suitcase', 'aceisstu'],
+
+		['passport', 'apoprsst']
+	],
+
+	'04.02.2024': [
+		['beach', 'abceh'],
+
+		['surf', 'frsu'],
+
+		['sandcastle', 'aacdelnsts'],
+
+		['sunscreen', 'ucnsnsree'],
+
+		['umbrella', 'abellmru']
+	],
+
+	'04.03.2024': [
+		['pizza', 'aipzz'],
+
+		['spaghetti', 'agehiptts'],
+
+		['lasagna', 'aaglnas'],
+
+		['ravioli', 'ailoriv'],
+
+		['risotto', 'ioortst']
+	],
+
+	'04.04.2024': [
+		['guitar', 'agirtu'],
+
+		['piano', 'ainop'],
+
+		['saxophone', 'aehnoospx'],
+
+		['violin', 'iilnov'],
+
+		['trumpet', 'mprttue']
+	],
+
+	'04.05.2024': [
+		['apple', 'aelpp'],
+
+		['banana', 'aaabnn'],
+
+		['strawberry', 'eswbrrtayr'],
+
+		['blueberry', 'bbeerlruy'],
+
+		['pineapple', 'ipenapple']
+	],
+
+	'04.06.2024': [
+		['football', 'abflloot'],
+
+		['baseball', 'lalbbsae'],
+
+		['basketball', 'ketsablalb'],
+
+		['tennis', 'einnst'],
+
+		['golf', 'fglo']
+	],
+
+	'04.07.2024': [
+		['computer', 'cemoprtu'],
+
+		['keyboard', 'abdekory'],
+
+		['software', 'aeforstw'],
+
+		['internet', 'eeinnrtt'],
+
+		['browser', 'beorrsw']
+	],
+
+	'04.08.2024': [
+		['teacher', 'aceehrt'],
+
+		['student', 'densttu'],
+
+		['classroom', 'aclmoorss'],
+
+		['homework', 'ehkmoorw'],
+
+		['recess', 'ceerss']
+	],
+
+	'04.09.2024': [
+		['butterfly', 'beftlrtuy'],
+
+		['ladybug', 'abdgluy'],
+
+		['dragonfly', 'adfglnory'],
+
+		['caterpillar', 'tacplailrer'],
+
+		['bumblebee', 'ebeblumbe']
 	]
 };
