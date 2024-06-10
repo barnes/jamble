@@ -1,12 +1,6 @@
 <script lang="ts">
 	import { getPuzzle } from '$lib/getPuzzle';
-	import {
-		correctGuess,
-		gameTick,
-		getToday,
-		initGame,
-		updateLocalResults
-	} from '$lib/logic';
+	import { correctGuess, gameTick, getToday, initGame, updateLocalResults } from '$lib/logic';
 	import { storeGame } from '$lib/db';
 	import { browser, dev } from '$app/environment';
 	import GameEnd from '$lib/components/GameEnd.svelte';
@@ -50,12 +44,29 @@
 
 	let loading = $state(true);
 	onMount(async () => {
-		console.log('onMount');
 		const getPuzzleResponse = await getPuzzle(false);
 		todaysPuzzle = getPuzzleResponse.results[0].response.result.rows[0][2].value.split(',');
 		gameState.currentShuffle = todaysPuzzle[1];
 		gameState.currentWord = todaysPuzzle[0];
-		console.log(todaysPuzzle);
+		if (lastPuzzle != todaysDate) {
+			lastCorrect = 0;
+			lastWords = [];
+			lastWord = '';
+			gameState = {
+				timer: 0,
+				timerWidth: '100%',
+				timerColor: green,
+				state: 'start', //start, playing, end
+				currentWordCount: 0,
+				currentShuffle: todaysPuzzle[1],
+				currentWord: todaysPuzzle[0],
+				guess: '',
+				correctCount: 0,
+				correctWords: [],
+				completeGame: false,
+				lastWord: ''
+			};
+		}
 		loading = false;
 	});
 
@@ -64,7 +75,6 @@
 	);
 
 	const startGame = () => {
-		console.log(gameState);
 		gameState = initGame(gameState);
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
@@ -110,6 +120,7 @@
 		</div>
 	{:else}
 		{#if gameState.state == 'start' && (lastPuzzle != todaysDate || lastPuzzle == '')}
+		<!-- {#if gameState.state == 'start' && gameState.currentShuffle === ''} -->
 			<article>
 				<p>
 					You've got 30 seconds to unscramble as many words as possible. Your score is the number of
@@ -126,6 +137,7 @@
 
 		<div class="game-container">
 			{#if gameState.state == 'start' && (lastPuzzle != todaysDate || lastPuzzle == '')}
+			<!-- {#if gameState.state == 'start' && gameState.currentShuffle === ''} -->
 				<div class="button">
 					<button on:click={startGame}>Play!</button>
 				</div>
@@ -140,14 +152,14 @@
 					correctCount={gameState.correctCount}
 				/>
 			{:else if gameState.state == 'end'}
-				<h3>Thanks for playing. Come back tomorrow for another puzzle! (failed)</h3>
+				<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
 				<GameEnd
 					correctCount={gameState.correctCount}
 					correctWords={gameState.correctWords}
 					lastWord={gameState.lastWord}
 					{todaysPuzzle}
 				/>
-			{:else if lastPuzzle == todaysDate}
+			{:else if lastPuzzle == todaysDate }
 				<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
 				<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} {todaysPuzzle} />
 			{/if}

@@ -83,6 +83,8 @@ export const getMostRecentPuzzle = async () => {
 			requests: [{ type: 'execute', stmt: { sql: 'SELECT * FROM puzzles ORDER BY ID DESC LIMIT 1' } }, { type: 'close' }]
 		})
 	});
-	return data.json();
+	let puzzle = await data.json();
+	console.log(puzzle)
+	return puzzle;
 }
 

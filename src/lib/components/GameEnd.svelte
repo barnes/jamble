@@ -62,6 +62,9 @@
 			localStorage.lastWords = (window.localStorage.getItem('scram-lastWords') || '').split(',');
 			localStorage.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete') || '0');
 			localStorage.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
+			results.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
+			results.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete') || '0');
+			results.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
 		}
 
 
@@ -71,15 +74,11 @@
 	});
 
 	// if(browser){
-	// 	results.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
-	// 	results.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete') || '0');
-	// 	results.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
 	
 	// }
 
 	
 </script>
-<h1>Using Props</h1>
 <div data-testid="completeGrid" class="grid top">
 	<div class="card">
 		<h2>Total Correct:</h2>

@@ -47,7 +47,6 @@ export const updateLocalResults = (
 	window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
 	window.localStorage.setItem('scram-lastWords', lastWords);
 	window.localStorage.setItem('scram-lastWord', lastWord);
-	console.log(window.localStorage)
 };
 
 export const getToday = () => {
@@ -109,7 +108,6 @@ export const correctGuess = (
 		);
 		gameState.state = 'end';
 	}
-	console.log(gameState.currentWordCount);
 	gameState.currentShuffle = todaysPuzzle[(gameState.currentWordCount*2)+1];
 	gameState.currentWord = todaysPuzzle[gameState.currentWordCount*2];
 	return gameState;
@@ -126,7 +124,6 @@ export const gameTick = (gameState: GameState): GameState => {
 	} else if (gameState.timer < 10000) {
 		gameState.timerColor = red;
 	}
-	console.log('tick', gameState)
 	return gameState;
 };
 

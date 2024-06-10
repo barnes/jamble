@@ -10,13 +10,7 @@ export const getPuzzle = async (force: boolean) => {
     // compare the day, month and year of the created date to today's date.
 
 
-    console.log(todaysPuzzleDate);
-    console.log(today);
-
-    console.log(force);
-
-
-    if(todaysPuzzleDate.getDate() === today.getDate() && todaysPuzzleDate.getMonth() === today.getMonth() && todaysPuzzleDate.getFullYear() === today.getFullYear() && !force){
+    if((todaysPuzzleDate.getDate() === today.getDate() && todaysPuzzleDate.getMonth() === today.getMonth() && todaysPuzzleDate.getFullYear() === today.getFullYear() && !force) || (todaysPuzzleDate > today && !force)){
         console.log('Puzzle already present');
         return todaysPuzzle;
     } else if(force){
