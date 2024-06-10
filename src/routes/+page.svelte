@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { puzzles } from '$lib/puzzles';
+	import { getPuzzle } from '$lib/getPuzzle';
 	import {
 		correctGuess,
-		gameOver,
 		gameTick,
 		getToday,
 		initGame,
@@ -12,6 +11,7 @@
 	import { browser, dev } from '$app/environment';
 	import GameEnd from '$lib/components/GameEnd.svelte';
 	import CompletedWords from '$lib/components/CompletedWords.svelte';
+	import { onMount } from 'svelte';
 	export const prerender = true;
 	export const ssr = false;
 
@@ -31,7 +31,7 @@
 	let record = !dev;
 	let green = '#4c8577';
 
-	const todaysPuzzle = puzzles[todaysDate];
+	let todaysPuzzle: string[] = [];
 
 	let gameState: GameState = $state({
 		timer: 0,
@@ -39,8 +39,8 @@
 		timerColor: green,
 		state: 'start', //start, playing, end
 		currentWordCount: 0,
-		currentShuffle: todaysPuzzle[0][1],
-		currentWord: todaysPuzzle[0][0],
+		currentShuffle: todaysPuzzle[1],
+		currentWord: todaysPuzzle[0],
 		guess: '',
 		correctCount: 0,
 		correctWords: [],
@@ -48,11 +48,23 @@
 		lastWord: ''
 	});
 
+	let loading = $state(true);
+	onMount(async () => {
+		console.log('onMount');
+		const getPuzzleResponse = await getPuzzle(false);
+		todaysPuzzle = getPuzzleResponse.results[0].response.result.rows[0][2].value.split(',');
+		gameState.currentShuffle = todaysPuzzle[1];
+		gameState.currentWord = todaysPuzzle[0];
+		console.log(todaysPuzzle);
+		loading = false;
+	});
+
 	const timerStyles = $derived(
 		`color: black; transition: width 1s; border-radius: 2rem; background-color: ${gameState.timerColor}; font-size: 2rem; margin: 1rem auto; display:flex; justify-content: center; width:${gameState.timerWidth}`
 	);
 
 	const startGame = () => {
+		console.log(gameState);
 		gameState = initGame(gameState);
 		const timer = setInterval(() => {
 			if (gameState.currentWord === gameState.guess.toLowerCase().replaceAll(' ', '')) {
@@ -92,46 +104,64 @@
 </script>
 
 <div class="game">
-	{#if gameState.state == 'start' && lastPuzzle != todaysDate}
-		<article>
-			<p>
-				You've got 30 seconds to unscramble as many words as possible. Your score is the number of
-				words you clear. Get a 'perfect' game by unscrambling all 6 words!
-			</p>
-			<p>
-				<em
-					>This game is in very, very early stages of development. Send feedback to ryan@barnes.lol</em
-				>
-			</p>
-		</article>
-	{/if}
-
-	<div class="game-container">
-		{#if gameState.state == 'start' && lastPuzzle != todaysDate}
-			<div class="button">
-				<button on:click={startGame}>Play!</button>
-			</div>
-		{:else if gameState.state == 'playing'}
-			<div data-testid="timer" style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
-			<div class="word" data-testid="scrambled-word" id="scambled">{gameState.currentShuffle}</div>
-			<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
-			<CompletedWords correctWords={gameState.correctWords} correctCount={gameState.correctCount} />
-		{:else if gameState.state == 'end'}
-			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
-			<GameEnd
-				correctCount={gameState.correctCount}
-				correctWords={gameState.correctWords}
-				lastWord={gameState.lastWord}
-				todaysPuzzle={todaysPuzzle}
-			/>
-		{:else if lastPuzzle == todaysDate}
-			<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
-			<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} todaysPuzzle={todaysPuzzle}/>
+	{#if loading}
+		<div class="loading">
+			<h1>Loading...</h1>
+		</div>
+	{:else}
+		{#if gameState.state == 'start' && (lastPuzzle != todaysDate || lastPuzzle == '')}
+			<article>
+				<p>
+					You've got 30 seconds to unscramble as many words as possible. Your score is the number of
+					words you clear. Get a 'perfect' game by unscrambling all 6 words!
+				</p>
+				<p>
+					<em
+						>This game is in very, very early stages of development. Send feedback to
+						ryan@barnes.lol</em
+					>
+				</p>
+			</article>
 		{/if}
-	</div>
+
+		<div class="game-container">
+			{#if gameState.state == 'start' && (lastPuzzle != todaysDate || lastPuzzle == '')}
+				<div class="button">
+					<button on:click={startGame}>Play!</button>
+				</div>
+			{:else if gameState.state == 'playing'}
+				<div data-testid="timer" style={timerStyles}>{Math.floor(gameState.timer / 1000)}</div>
+				<div class="word" data-testid="scrambled-word" id="scambled">
+					{gameState.currentShuffle}
+				</div>
+				<input id="gameInput" type="text" bind:value={gameState.guess} autofocus />
+				<CompletedWords
+					correctWords={gameState.correctWords}
+					correctCount={gameState.correctCount}
+				/>
+			{:else if gameState.state == 'end'}
+				<h3>Thanks for playing. Come back tomorrow for another puzzle! (failed)</h3>
+				<GameEnd
+					correctCount={gameState.correctCount}
+					correctWords={gameState.correctWords}
+					lastWord={gameState.lastWord}
+					{todaysPuzzle}
+				/>
+			{:else if lastPuzzle == todaysDate}
+				<h3>Thanks for playing. Come back tomorrow for another puzzle!</h3>
+				<GameEnd correctCount={lastCorrect} correctWords={lastWords} {lastWord} {todaysPuzzle} />
+			{/if}
+		</div>
+	{/if}
 </div>
 
 <style>
+	.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 2rem;
+	}
 	h3 {
 		margin-top: 1rem;
 	}
@@ -192,6 +222,3 @@
 		margin: 0;
 	}
 </style>
-
-
-

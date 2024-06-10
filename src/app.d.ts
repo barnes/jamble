@@ -20,8 +20,10 @@ declare global {
 		correctWords: string[];
 		completeGame: boolean;
 		lastWord: string;
-	}
+		}
 	}
 }
+
+
 
 export {};

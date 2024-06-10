@@ -40,5 +40,8 @@
 		"vitest": "^1.2.0",
 		"wordlist-english": "^1.2.1"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"openai": "^4.49.1"
+	}
 }

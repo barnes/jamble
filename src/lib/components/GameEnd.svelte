@@ -4,15 +4,17 @@
 		correctCount,
 		correctWords,
 		lastWord,
-		todaysPuzzle
+		todaysPuzzle,
 	}: {
 		correctCount: number;
 		correctWords: string[];
 		lastWord: string;
-		todaysPuzzle: string[][];
+		todaysPuzzle: string[];
 	} = $props();
+
 	import copy from 'copy-to-clipboard';
 	import { browser } from '$app/environment';
+	import { getPuzzle } from '$lib/getPuzzle';
 	const today = new Date();
 	const yyyy = today.getFullYear();
 	let mm = today.getMonth() + 1; // month is zero-based
@@ -39,26 +41,52 @@
 		timePlayed: 0
 	};
 
-	if(browser){
-		results.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed'));
-		results.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete'));
-		results.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed'));
-	
+	let localStorage = {
+		gamesPlayed: 0,
+		lastCorrect: 5,
+		lastPuzzle: '',
+		lastWord: 'test',
+		lastWords: ['test', 'test'],
+		numberComplete: 0,
+		timePlayed: 0
 	}
 
-	onMount(() => {
-		document.querySelector('.copy').addEventListener('click', () => {
+	onMount(async () => {
+		const getPuzzleResponse = await getPuzzle(false);
+		todaysPuzzle = getPuzzleResponse.results[0].response.result.rows[0][2].value.split(',');
+		if (browser) {
+			localStorage.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
+			localStorage.lastCorrect = parseInt(window.localStorage.getItem('scram-lastCorrect') || '0');
+			localStorage.lastPuzzle = window.localStorage.getItem('scram-lastPuzzle') || '';
+			localStorage.lastWord = window.localStorage.getItem('scram-lastWord') || '';
+			localStorage.lastWords = (window.localStorage.getItem('scram-lastWords') || '').split(',');
+			localStorage.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete') || '0');
+			localStorage.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
+		}
+
+
+		document.querySelector('.copy')?.addEventListener('click', () => {
 			copy(shareString);
 		});
-	})
+	});
+
+	// if(browser){
+	// 	results.gamesPlayed = parseInt(window.localStorage.getItem('scram-gamesPlayed') || '0');
+	// 	results.numberComplete = parseInt(window.localStorage.getItem('scram-numberComplete') || '0');
+	// 	results.timePlayed = parseInt(window.localStorage.getItem('scram-timePlayed') || '0');
+	
+	// }
+
+	
 </script>
+<h1>Using Props</h1>
 <div data-testid="completeGrid" class="grid top">
 	<div class="card">
 		<h2>Total Correct:</h2>
 		<article>
 			<span data-testid="correct-count" class="word large">{correctCount}</span>
 			:
-			<span data-testid="total-count" class="word large">{todaysPuzzle.length}</span>
+			<span data-testid="total-count" class="word large">{todaysPuzzle.length/2}</span>
 		</article>
 	</div>
 	<div class="card">
@@ -101,6 +129,8 @@
 		</article>
 	</div>
 </div>
+
+
 
 
 <style>

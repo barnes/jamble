@@ -47,6 +47,7 @@ export const updateLocalResults = (
 	window.localStorage.setItem('scram-lastCorrect', lastCorrect.toString());
 	window.localStorage.setItem('scram-lastWords', lastWords);
 	window.localStorage.setItem('scram-lastWord', lastWord);
+	console.log(window.localStorage)
 };
 
 export const getToday = () => {
@@ -73,7 +74,7 @@ export const initGame = (gameState: GameState): GameState => {
 
 export const correctGuess = (
 	gameState: GameState,
-	todaysPuzzle: string[][],
+	todaysPuzzle: string[],
 	timer: NodeJS.Timeout,
 	record: boolean,
 	todaysDate: string
@@ -82,11 +83,11 @@ export const correctGuess = (
 	gameState.currentWordCount++;
 	gameState.correctCount++;
 	gameState.correctWords.push(gameState.currentWord);
-	if (todaysPuzzle[gameState.currentWordCount] === undefined) {
+	if (todaysPuzzle[gameState.currentWordCount*2] === undefined) {
 		clearInterval(timer);
 		gameState.completeGame = true;
 		gameState.lastWord = gameState.currentWord;
-		let timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
+		const timeToComplete = Math.floor((30000 - gameState.timer) / 1000);
 		if (record) {
 			storeGame(
 				'null',
@@ -108,8 +109,9 @@ export const correctGuess = (
 		);
 		gameState.state = 'end';
 	}
-	gameState.currentShuffle = todaysPuzzle[gameState.currentWordCount][1];
-	gameState.currentWord = todaysPuzzle[gameState.currentWordCount][0];
+	console.log(gameState.currentWordCount);
+	gameState.currentShuffle = todaysPuzzle[(gameState.currentWordCount*2)+1];
+	gameState.currentWord = todaysPuzzle[gameState.currentWordCount*2];
 	return gameState;
 };
 
@@ -124,6 +126,7 @@ export const gameTick = (gameState: GameState): GameState => {
 	} else if (gameState.timer < 10000) {
 		gameState.timerColor = red;
 	}
+	console.log('tick', gameState)
 	return gameState;
 };
 

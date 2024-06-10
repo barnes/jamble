@@ -19,7 +19,7 @@ export const storeGame = (
 	category: string,
 	correctCount: number,
 	totalWords: number,
-	words: string[][],
+	words: string[],
 	correctWords: string[],
 	completeGame: boolean,
 	timeToComplete: number
@@ -52,3 +52,37 @@ export const getRunCount = async () => {
 	});
 	return data.json();
 }
+
+const storePuzzleQuery = `INSERT INTO puzzles (puzzle) VALUES (?)`;
+
+export const storeTest = async (puzzle: string) => {
+
+	const res = await fetch(url, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${PUBLIC_TURSO_AUTH_TOKEN}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			requests: [{ type: 'execute', stmt: { sql: `INSERT INTO puzzles (puzzle) VALUES ("${puzzle}");` } }, { type: 'close' }]
+		})
+	});
+	const response = await res.json();
+	console.log(response);
+	return response;
+}
+
+export const getMostRecentPuzzle = async () => {
+	const data = await fetch(url, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${PUBLIC_TURSO_AUTH_TOKEN}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			requests: [{ type: 'execute', stmt: { sql: 'SELECT * FROM puzzles ORDER BY ID DESC LIMIT 1' } }, { type: 'close' }]
+		})
+	});
+	return data.json();
+}
+
